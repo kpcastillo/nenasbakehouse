@@ -1,0 +1,19 @@
+{
+  "name": "nenas-bakehouse",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing site for Nenas Bakehouse — a cottage bakehouse in Las Vegas, NV.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "make-preview": "astro build && node scripts/make-preview.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.2.9",
+    "@astrojs/sitemap": "^3.6.0"
+  }
+}

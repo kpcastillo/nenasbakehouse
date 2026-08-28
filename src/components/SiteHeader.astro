@@ -1,0 +1,9 @@
+---
+import { nav } from '../data/site.js';
+---
+<header>
+  {nav.map((item) => (
+    <a href={item.href} data-nav={item.key}>{item.label}</a>
+  ))}
+  <a href="#order" class="nav-inquire">Inquire</a>
+</header>

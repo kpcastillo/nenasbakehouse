@@ -1,0 +1,21 @@
+---
+// The abstract bakehouse mark — a ring, a rising curve, a seed.
+interface Props {
+  label?: string;
+  ringOpacity?: number;
+  curveOpacity?: number;
+}
+const { label = 'Nenas Bakehouse', ringOpacity = 0.22, curveOpacity = 0.55 } = Astro.props;
+---
+<svg viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" role="img" aria-label={label}>
+  <circle cx="960" cy="960" r="880" fill="none" stroke="currentColor" stroke-width="46" opacity={ringOpacity} />
+  <path
+    d="M960 470c0 190 130 300 130 490s-130 300-130 490"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="52"
+    stroke-linecap="round"
+    opacity={curveOpacity}
+  />
+  <circle cx="960" cy="960" r="86" fill="currentColor" />
+</svg>

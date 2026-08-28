@@ -1,0 +1,41 @@
+/* ============================================================
+   TOKENS — colour ladder, type, and layout rails.
+   ============================================================ */
+:root {
+  /* warm ladder */
+  --linen: #f9f1da;
+  --honey: #eac482;
+  --crust: #d3a15d;
+  --ginger: #b57638;
+  --caramel: #8f5a21;
+  --espresso: #57390e;
+
+  /* botanical — savory only */
+  --sage-mist: #dfe3ce;
+  --sage-leaf: #75855c;
+  --deep-olive: #4a5537;
+
+  /* semantic */
+  --surface: var(--linen);
+  --ink: var(--espresso);
+  --accent: var(--ginger);
+  --rule: color-mix(in srgb, var(--espresso) 14%, transparent);
+  --whisper: color-mix(in srgb, var(--espresso) 52%, transparent);
+
+  /* type */
+  --display: "Cormorant Garamond", Georgia, serif;
+  --body: "DM Sans", system-ui, sans-serif;
+  --hand: "Caveat", cursive;
+
+  /* the baker's margin */
+  --rail: 112px;
+  --gutter: clamp(20px, 5vw, 88px);
+}
+
+[data-family="savory"] {
+  --surface: var(--sage-mist);
+  --ink: var(--deep-olive);
+  --accent: var(--sage-leaf);
+  --rule: color-mix(in srgb, var(--deep-olive) 16%, transparent);
+  --whisper: color-mix(in srgb, var(--deep-olive) 55%, transparent);
+}

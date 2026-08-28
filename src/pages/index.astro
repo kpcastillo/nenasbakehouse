@@ -1,0 +1,201 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Frame from '../components/Frame.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { cakes } from '../data/cakes.js';
+import { breads } from '../data/breads.js';
+import { everyday } from '../data/everyday.js';
+import { site } from '../data/site.js';
+
+const revealDelay = (i: number) => (i > 0 ? `rv-d${Math.min(i, 3)}` : '');
+const cropLabel = (ratio: string) =>
+  ratio === '1/1' ? '1:1 · 1400×1400' : '4:5 · 1400×1750';
+---
+<Base>
+  <Rail />
+  <SiteHeader />
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <div class="grid">
+        <div class="hero__type">
+          <div class="hero__eyebrow rv">
+            <span class="line"></span>
+            <span class="util">Cottage bakehouse · Las&nbsp;Vegas</span>
+          </div>
+          <h1>
+            <span class="line-mask"><span>Less sweet,</span></span>
+            <span class="line-mask"><span>still a <em class="lift">treat</em>.</span></span>
+          </h1>
+          <p class="hero__sub rv rv-d2">
+            Cakes and bread made the long way — browned butter, cultured starter,
+            real fruit — and pulled back on sugar until the flavour underneath
+            finally has room to speak.
+          </p>
+          <div class="hero__meta rv rv-d3">
+            <div><strong>5</strong><span class="util">Cake flavours</span></div>
+            <div><strong>72h</strong><span class="util">Lead time</span></div>
+            <div><strong>SNHD</strong><span class="util">Permitted</span></div>
+          </div>
+        </div>
+
+        <figure class="hero__plate rv rv-d2">
+          <Frame crop="Hero · 4:5 · 1600×2000" speed={0.045} alt="Nenas Bakehouse cake" />
+          <figcaption class="hero__cap">cut it thin,<br />eat it twice</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ THESIS ============ -->
+    <section class="thesis" id="thesis">
+      <div class="grid">
+        <div class="thesis__label rv"><span class="util">The&nbsp;whole&nbsp;idea</span></div>
+        <div class="thesis__body">
+          <p class="rv">
+            Most bakeries run sugar at parity with flour. We hold it at{' '}
+            <em>seventy-five percent</em> — the floor where crumb still sets but
+            the butter, the cultured tang and the fruit stop competing with
+            sweetness.
+          </p>
+          <p class="thesis__note rv rv-d2">
+            Below that, structure fails: the crumb goes gummy and the loaf
+            collapses on cooling. So this isn't a health claim and it isn't a
+            sugar-free cake. It's a measured decision, made once, and held across
+            every recipe in the book.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAKES ============ -->
+    <section class="cakes" id="cakes">
+      <div class="sec-head rv">
+        <h2>Cakes &amp; layer cakes</h2>
+        <span class="util">Five, made properly</span>
+      </div>
+
+      {cakes.map((cake) => (
+        <article class="cake rv">
+          <div class="cake__idx"><span class="fig">{cake.idx}</span></div>
+          <div class="cake__body">
+            <h3>{cake.name}</h3>
+            <p class="cake__desc">{cake.desc}</p>
+            <div class="cake__spec">
+              <span><span class="util">Serves</span><b>{cake.serves}</b></span>
+              <span><span class="util">Lead time</span><b>{cake.lead}</b></span>
+              <span><span class="util">From</span><b>{cake.from}</b></span>
+            </div>
+            <p class="allerg"><b>Contains</b> {cake.contains}</p>
+          </div>
+          <figure class="cake__img">
+            <Frame src={cake.image} alt={cake.name} crop="3:4 · 1200×1600" />
+          </figure>
+        </article>
+      ))}
+    </section>
+
+    <!-- ============ SAVORY — palette flips via data-family ============ -->
+    <section class="savory" id="savory" data-family="savory">
+      <div class="sec-head rv">
+        <h2>Bread &amp; focaccia</h2>
+        <span class="util">Baked to the week, not to order</span>
+      </div>
+      <div class="loaf">
+        <div class="loaf__lede">
+          <p class="lede rv">
+            Slow ferment, blistered crust, and an open crumb that took three days
+            to earn.
+          </p>
+          <p class="loaf__note rv rv-d2">
+            Bread runs on a schedule because starter does. Reserve by Wednesday
+            for the weekend bake — quantities are fixed by oven space, not by
+            demand.
+          </p>
+        </div>
+        <div class="loaf__list">
+          {breads.map((bread, i) => (
+            <div class={`row rv ${revealDelay(Math.floor(i / 2))}`}>
+              <span class="row__name">{bread.name}</span>
+              <span class="row__day">{bread.day}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EVERYDAY & INDIVIDUAL ============ -->
+    <section class="everyday" id="everyday">
+      <div class="sec-head rv">
+        <h2>Everyday &amp; individual</h2>
+        <span class="util">Small format · bake and pack</span>
+      </div>
+
+      <div class="case">
+        {everyday.map((item, i) => (
+          <article class={`case__item rv ${revealDelay(i)}`}>
+            <Frame src={item.image ?? null} alt={item.name} crop={cropLabel(item.ratio)} />
+            <h3>{item.name}</h3>
+            <p class="case__desc">{item.desc}</p>
+            <ul class="case__list">
+              {item.list.map((entry) => (
+                <li>{entry.name} <span>{entry.note}</span></li>
+              ))}
+            </ul>
+            <div class="case__foot">
+              <span class="util">{item.footLabel}</span><b>{item.footValue}</b>
+              <p class="allerg">
+                <b>Contains</b> {item.contains}
+                {item.mayContain && <><br />May contain {item.mayContain}</>}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============ ORDERING ============ -->
+    <section class="order" id="order">
+      <div class="grid">
+        <div class="order__head">
+          <span class="util rv">How it works</span>
+          <h2 class="rv" style="margin-top:20px">Tell me the date, I'll tell you what's possible.</h2>
+          <a class="cta rv rv-d2" href="#inquiry">Start an inquiry <span class="arrow">→</span></a>
+          <p class="lead-note rv rv-d2">
+            Custom cakes need {site.leadTimes.custom}. Tiered cakes, {site.leadTimes.tiered}.
+          </p>
+        </div>
+        <div class="order__steps">
+          <div class="step rv">
+            <span class="fig">01</span>
+            <div>
+              <h4>Send the details</h4>
+              <p>Date, headcount, flavour, and every allergy at the table. The allergy field is the one I read first.</p>
+            </div>
+          </div>
+          <div class="step rv rv-d1">
+            <span class="fig">02</span>
+            <div>
+              <h4>We confirm together</h4>
+              <p>You'll get a written quote with the exact size, price and pickup window. Nothing is booked until you say yes.</p>
+            </div>
+          </div>
+          <div class="step rv rv-d2">
+            <span class="fig">03</span>
+            <div>
+              <h4>Pickup or local delivery</h4>
+              <p>Pickup from the bakehouse, or delivery inside the {site.serviceArea} for a flat fee. Cakes travel flat and cold.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <InquiryForm />
+    </section>
+  </main>
+
+  <SiteFooter />
+</Base>

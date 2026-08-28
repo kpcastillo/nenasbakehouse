@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nenas Bakehouse — Less sweet, still a treat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS — mirrors src/styles/tokens.css in the Astro build
+   ============================================================ */
+:root{
+  /* warm ladder */
+  --linen:#F9F1DA; --honey:#EAC482; --crust:#D3A15D;
+  --ginger:#B57638; --caramel:#8F5A21; --espresso:#57390E;
+  /* botanical — savory only */
+  --sage-mist:#DFE3CE; --sage-leaf:#75855C; --deep-olive:#4A5537;
+
+  /* semantic */
+  --surface:var(--linen);
+  --ink:var(--espresso);
+  --accent:var(--ginger);
+  --rule:color-mix(in srgb, var(--espresso) 14%, transparent);
+  --whisper:color-mix(in srgb, var(--espresso) 52%, transparent);
+
+  /* type */
+  --display:"Cormorant Garamond", Georgia, serif;
+  --body:"DM Sans", system-ui, sans-serif;
+  --hand:"Caveat", cursive;
+
+  /* the baker's margin */
+  --rail:112px;
+  --gutter:clamp(20px, 5vw, 88px);
+}
+
+[data-family="savory"]{
+  --surface:var(--sage-mist);
+  --ink:var(--deep-olive);
+  --accent:var(--sage-leaf);
+  --rule:color-mix(in srgb, var(--deep-olive) 16%, transparent);
+  --whisper:color-mix(in srgb, var(--deep-olive) 55%, transparent);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--linen);
+  color:var(--espresso);
+  font-family:var(--body);
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--honey);color:var(--espresso)}
+
+/* utility type — skinny, wide, tiny. the "barely there" register. */
+.util{
+  font-family:var(--body);
+  font-size:10px; font-weight:400;
+  letter-spacing:.22em; text-transform:uppercase;
+  color:var(--whisper);
+}
+.fig{ font-family:var(--body); font-size:10px; font-weight:400;
+  letter-spacing:.16em; color:var(--whisper); font-variant-numeric:tabular-nums }
+
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--gutter);top:16px;z-index:99;background:var(--espresso);
+  color:var(--linen);padding:10px 16px;font-size:12px;letter-spacing:.1em}
+
+/* ============================================================
+   SIGNATURE — the baker's margin
+   a fixed left rail carrying the numbers the bakery runs on
+   ============================================================ */
+.rail{
+  position:fixed; left:0; top:0; bottom:0; width:var(--rail);
+  border-right:1px solid var(--rule);
+  display:flex; flex-direction:column; justify-content:space-between;
+  align-items:center; padding:26px 0 22px;
+  z-index:40; pointer-events:none;
+  transition:border-color .6s ease;
+}
+.rail__mark{pointer-events:auto;display:block;width:36px;height:36px}
+.rail__mark svg{width:100%;height:100%;display:block}
+.rail__read{
+  writing-mode:vertical-rl; text-orientation:mixed;
+  font-size:10px; letter-spacing:.28em; text-transform:uppercase;
+  color:var(--whisper); font-weight:400;
+  transition:color .5s ease;
+}
+.rail__read b{font-weight:500;color:var(--accent);transition:color .5s ease}
+.rail__tick{width:1px;height:46px;background:var(--rule)}
+
+/* ============================================================
+   HEADER — fixed, but earns its background only once you leave
+   the hero, and gets out of the way when you scroll down
+   ============================================================ */
+header{
+  position:fixed; top:0; left:var(--rail); right:0;
+  display:flex; justify-content:flex-end; align-items:center; gap:38px;
+  padding:30px var(--gutter); z-index:30;
+  background:transparent; border-bottom:1px solid transparent;
+  transition:transform .5s cubic-bezier(.22,.7,.25,1),
+             background .4s ease, border-color .4s ease,
+             padding .4s ease, backdrop-filter .4s ease;
+}
+header a{ font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  font-weight:400; color:var(--whisper); transition:color .3s;
+  position:relative; padding-bottom:3px }
+header a:hover{color:var(--espresso)}
+
+/* active section marker — a 1px underline, nothing louder */
+header a::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .4s cubic-bezier(.22,.7,.25,1);
+}
+header a.on{color:var(--espresso)}
+header a.on::after{transform:scaleX(1)}
+
+/* condensed state, once past the hero */
+body.nav-solid header{
+  padding-top:15px; padding-bottom:15px;
+  background:color-mix(in srgb, var(--linen) 84%, transparent);
+  backdrop-filter:blur(14px) saturate(1.08);
+  -webkit-backdrop-filter:blur(14px) saturate(1.08);
+  border-bottom-color:var(--rule);
+}
+/* over the sage section the bar adopts the savory palette */
+body[data-zone="savory"] header a{color:color-mix(in srgb, var(--deep-olive) 56%, transparent)}
+body[data-zone="savory"] header a:hover,
+body[data-zone="savory"] header a.on{color:var(--deep-olive)}
+body[data-zone="savory"].nav-solid header{
+  background:color-mix(in srgb, var(--sage-mist) 86%, transparent);
+  border-bottom-color:color-mix(in srgb, var(--deep-olive) 16%, transparent);
+}
+/* retract on scroll down, return on scroll up */
+body.nav-hide header{transform:translateY(-101%)}
+
+/* anchor jumps must clear the fixed bar */
+section{scroll-margin-top:86px}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+main{margin-left:var(--rail)}
+section{position:relative;padding:0 var(--gutter)}
+
+/* asymmetric 12-col */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+
+/* ============================================================
+   HERO — headline hangs off-axis, image bleeds right
+   ============================================================ */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:120px;padding-bottom:80px}
+.hero .grid{width:100%;align-items:center}
+
+.hero__type{grid-column:1 / span 6;position:relative;z-index:2}
+.hero__eyebrow{margin-bottom:34px;display:flex;align-items:center;gap:14px}
+.hero__eyebrow .line{width:52px;height:1px;background:var(--rule)}
+
+.hero h1{
+  font-family:var(--display); font-weight:300; font-style:italic;
+  font-size:clamp(52px, 7.4vw, 118px);
+  line-height:.94; letter-spacing:-.022em;
+  margin-left:-.055em; /* optical hang into the margin */
+}
+.hero h1 .lift{display:inline-block;color:var(--accent)}
+.hero__sub{
+  margin-top:34px; max-width:34ch;
+  font-size:15px; line-height:1.75; color:var(--whisper); font-weight:300;
+}
+.hero__meta{margin-top:52px;display:flex;gap:44px;align-items:flex-start}
+.hero__meta div{border-top:1px solid var(--rule);padding-top:11px}
+.hero__meta strong{
+  display:block;font-family:var(--display);font-style:italic;
+  font-size:26px;font-weight:400;letter-spacing:-.01em;margin-bottom:3px;
+}
+
+/* image bleeds past the right edge — breaks the box */
+.hero__plate{
+  grid-column:8 / -1; position:relative;
+  margin-right:calc(var(--gutter) * -1);
+}
+.ph{
+  position:relative; background:
+    repeating-linear-gradient(135deg,
+      color-mix(in srgb,var(--espresso) 6%,transparent) 0 2px,
+      transparent 2px 9px),
+    color-mix(in srgb,var(--espresso) 8%,transparent);
+  border:1px solid var(--rule);
+  display:flex;align-items:flex-end;justify-content:flex-start;
+}
+.ph::after{
+  content:attr(data-crop);
+  position:absolute;bottom:9px;left:11px;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--whisper);
+}
+.hero__plate .ph{aspect-ratio:4/5}
+.hero__cap{
+  position:absolute;left:-52px;bottom:44px;
+  font-family:var(--hand);font-size:21px;color:var(--accent);
+  transform:rotate(-6deg);line-height:1.15;text-align:right;width:130px;
+}
+
+/* ============================================================
+   THESIS — the one number the whole brand rests on
+   ============================================================ */
+.thesis{padding-top:150px;padding-bottom:150px}
+.thesis .grid{align-items:end}
+.thesis__label{grid-column:1 / span 2}
+.thesis__body{grid-column:4 / span 7}
+.thesis p{
+  font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:clamp(26px,3.1vw,44px);line-height:1.28;letter-spacing:-.012em;
+}
+.thesis em{font-style:normal;color:var(--accent)}
+.thesis__note{
+  margin-top:36px;font-family:var(--body);font-size:13.5px;
+  line-height:1.8;color:var(--whisper);max-width:52ch;font-weight:300;
+}
+
+/* ============================================================
+   CAKES — magazine entries at alternating indents
+   ============================================================ */
+.cakes{padding-top:40px;padding-bottom:130px}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--rule);padding-bottom:16px;margin-bottom:0;
+}
+.sec-head h2{
+  font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:30px;letter-spacing:-.01em;
+}
+
+.cake{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+  padding:52px 0;border-bottom:1px solid var(--rule);
+  align-items:start;
+}
+.cake__idx{grid-column:1 / span 1;padding-top:7px}
+.cake__body{grid-column:2 / span 5}
+.cake__img{grid-column:8 / span 4}
+/* every other entry steps in — asymmetry with a rule behind it */
+.cake:nth-child(even) .cake__body{grid-column:3 / span 5}
+.cake:nth-child(even) .cake__img{grid-column:9 / span 4}
+
+.cake h3{
+  font-family:var(--display);font-weight:400;font-style:italic;
+  font-size:clamp(27px,2.7vw,39px);line-height:1.06;letter-spacing:-.015em;
+}
+.cake__desc{margin-top:15px;font-size:14px;line-height:1.8;color:var(--whisper);max-width:44ch;font-weight:300}
+.cake__spec{margin-top:26px;display:flex;gap:26px;flex-wrap:wrap}
+.cake__spec span{border-top:1px solid var(--rule);padding-top:8px;min-width:74px}
+.cake__spec b{display:block;font-size:13px;font-weight:400;color:var(--espresso);letter-spacing:0;margin-top:3px}
+.cake__img .ph{aspect-ratio:3/4}
+
+.allerg{
+  margin-top:24px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--whisper);
+}
+.allerg b{font-weight:500;color:var(--accent)}
+
+/* ============================================================
+   SAVORY — the palette flips. same markup, data-family swap.
+   ============================================================ */
+.savory{
+  background:var(--surface);color:var(--ink);
+  margin-left:calc(var(--rail) * -1);
+  padding:130px var(--gutter) 130px calc(var(--rail) + var(--gutter));
+}
+.savory .sec-head h2,.savory h3{color:var(--ink)}
+.savory .loaf{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-top:54px}
+.savory .loaf__lede{grid-column:1 / span 5}
+.savory .loaf__list{grid-column:7 / span 6}
+.savory p.lede{
+  font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:clamp(23px,2.4vw,33px);line-height:1.32;
+}
+.savory .loaf__note{margin-top:26px;font-size:13.5px;line-height:1.8;color:var(--whisper);max-width:38ch}
+.row{
+  display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:17px 0;border-bottom:1px solid var(--rule);
+}
+.row:first-child{border-top:1px solid var(--rule)}
+.row__name{font-family:var(--display);font-style:italic;font-size:22px;font-weight:400}
+.row__day{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--whisper);white-space:nowrap}
+
+/* ============================================================
+   EVERYDAY — small format. a third layout register:
+   not magazine entries, not a schedule list. a counter case.
+   ============================================================ */
+.everyday{padding-top:130px;padding-bottom:120px}
+.case{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-top:58px}
+.case__item{grid-column:span 3;display:flex;flex-direction:column}
+/* staggered drop + alternating crop keeps four columns from reading as boxes */
+.case__item:nth-child(2),.case__item:nth-child(4){margin-top:72px}
+.case__item:nth-child(1) .ph,.case__item:nth-child(3) .ph{aspect-ratio:1/1}
+.case__item:nth-child(2) .ph,.case__item:nth-child(4) .ph{aspect-ratio:4/5}
+
+.case__item h3{
+  font-family:var(--display);font-style:italic;font-weight:400;
+  font-size:26px;line-height:1.08;letter-spacing:-.012em;margin-top:22px;
+}
+.case__desc{margin-top:11px;font-size:13px;line-height:1.75;color:var(--whisper);font-weight:300}
+.case__list{margin-top:20px;border-top:1px solid var(--rule)}
+.case__list li{
+  list-style:none;display:flex;justify-content:space-between;gap:12px;
+  padding:9px 0;border-bottom:1px solid var(--rule);
+  font-size:12.5px;font-weight:300;
+}
+.case__list li span{color:var(--whisper);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;white-space:nowrap;align-self:center}
+.case__foot{margin-top:18px}
+.case__foot b{display:block;font-size:13px;font-weight:400;margin-top:3px}
+
+/* ============================================================
+   ORDERING
+   ============================================================ */
+.order{padding-top:130px;padding-bottom:120px}
+.order .grid{align-items:start}
+.order__head{grid-column:1 / span 4}
+.order__steps{grid-column:6 / span 7}
+.order h2{
+  font-family:var(--display);font-style:italic;font-weight:300;
+  font-size:clamp(34px,4vw,58px);line-height:1.04;letter-spacing:-.018em;
+}
+.step{display:grid;grid-template-columns:56px 1fr;gap:20px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.step:first-child{border-top:1px solid var(--rule)}
+.step h4{font-size:14px;font-weight:500;letter-spacing:.01em;margin-bottom:7px}
+.step p{font-size:13.5px;line-height:1.78;color:var(--whisper);max-width:46ch;font-weight:300}
+.cta{
+  display:inline-flex;align-items:center;gap:13px;margin-top:44px;
+  border-bottom:1px solid var(--espresso);padding-bottom:7px;
+  font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;
+}
+.cta .arrow{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+.cta:hover .arrow{transform:translateX(7px)}
+.lead-note{margin-top:20px;font-size:11px;letter-spacing:.06em;color:var(--whisper)}
+
+/* ============================================================
+   FOOTER — compliance lives here, rendered from compliance.ts
+   ============================================================ */
+footer{
+  margin-left:calc(var(--rail) * -1);
+  background:var(--espresso);color:var(--linen);
+  padding:96px var(--gutter) 40px calc(var(--rail) + var(--gutter));
+}
+footer .grid{gap:24px}
+.f-brand{grid-column:1 / span 4}
+.f-brand svg{width:78px;height:78px;display:block;margin-bottom:22px}
+.f-tag{font-family:var(--hand);font-size:23px;color:var(--honey)}
+.f-col{grid-column:span 2}
+.f-col h5{font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--linen) 45%,transparent);margin-bottom:16px}
+.f-col a,.f-col p{display:block;font-size:13px;line-height:2.1;color:var(--linen);opacity:.86;font-weight:300}
+.f-col a:hover{opacity:1;color:var(--honey)}
+.disclosure{
+  grid-column:1 / -1;margin-top:74px;padding-top:22px;
+  border-top:1px solid color-mix(in srgb,var(--linen) 18%,transparent);
+  display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;
+}
+.disclosure p{
+  font-size:10.5px;line-height:1.85;letter-spacing:.03em;
+  color:color-mix(in srgb,var(--linen) 62%,transparent);max-width:64ch;
+}
+
+/* ============================================================
+   MOTION — reveal on scroll, hero parallax
+   ============================================================ */
+.rv{opacity:0;transform:translateY(22px);
+  transition:opacity .95s cubic-bezier(.22,.7,.25,1),transform .95s cubic-bezier(.22,.7,.25,1)}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.09s} .rv-d2{transition-delay:.18s} .rv-d3{transition-delay:.27s}
+
+/* headline sets line by line on load */
+.line-mask{overflow:hidden;display:block}
+.line-mask > span{display:block;transform:translateY(104%);
+  transition:transform 1.15s cubic-bezier(.19,.9,.22,1)}
+body.ready .line-mask > span{transform:none}
+body.ready .line-mask:nth-child(2) > span{transition-delay:.11s}
+body.ready .line-mask:nth-child(3) > span{transition-delay:.22s}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv,.line-mask > span{transition:none!important;opacity:1!important;transform:none!important}
+  .parallax{transform:none!important}
+  header{transition:background .01s,border-color .01s}
+  body.nav-hide header{transform:none}
+  header a::after{transition:none}
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1020px){
+  .hero__type{grid-column:1 / -1}
+  .hero__plate{grid-column:1 / -1;margin-top:56px;margin-right:0;max-width:420px}
+  .hero__cap{left:auto;right:-8px;bottom:-30px}
+  .thesis__label{grid-column:1 / -1;margin-bottom:22px}
+  .thesis__body{grid-column:1 / -1}
+  .cake__body,.cake:nth-child(even) .cake__body{grid-column:2 / -1}
+  .cake__img,.cake:nth-child(even) .cake__img{grid-column:2 / span 6;margin-top:30px}
+  .savory .loaf__lede,.savory .loaf__list{grid-column:1 / -1}
+  .savory .loaf__list{margin-top:40px}
+  .case__item{grid-column:span 6}
+  .case__item:nth-child(2){margin-top:72px}
+  .case__item:nth-child(3){margin-top:0}
+  .case__item:nth-child(4){margin-top:72px}
+  .order__head,.order__steps{grid-column:1 / -1}
+  .order__steps{margin-top:44px}
+  .f-brand{grid-column:1 / -1;margin-bottom:44px}
+  .f-col{grid-column:span 4}
+}
+@media (max-width:640px){
+  :root{--rail:52px}
+  header{gap:16px;padding-top:20px;padding-bottom:20px}
+  header a{font-size:9.5px;letter-spacing:.13em}
+  .nav-inquire{display:none}
+  body.nav-solid header{padding-top:13px;padding-bottom:13px}
+  section{scroll-margin-top:66px}
+  .rail__read{font-size:9px;letter-spacing:.2em}
+  .hero{min-height:auto;padding-top:150px}
+  .hero h1{font-size:clamp(40px,12vw,64px);margin-left:-.03em}
+  .hero__meta{gap:26px}
+  .cake{padding:38px 0}
+  .cake__idx{grid-column:1 / -1;padding-top:0;margin-bottom:10px}
+  .cake__body,.cake:nth-child(even) .cake__body{grid-column:1 / -1}
+  .cake__img,.cake:nth-child(even) .cake__img{grid-column:1 / span 8}
+  .case__item,.case__item:nth-child(n){grid-column:1 / -1;margin-top:0}
+  .case__item + .case__item{margin-top:56px}
+  .case__item .ph{aspect-ratio:4/5!important;max-width:280px}
+  .f-col{grid-column:span 6}
+  .disclosure{flex-direction:column;gap:14px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ THE BAKER'S MARGIN ============ -->
+<div class="rail" id="rail" aria-hidden="true">
+  <a class="rail__mark" href="#main" aria-label="Nenas Bakehouse">
+    <svg viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="960" cy="960" r="880" fill="none" stroke="currentColor" stroke-width="46" opacity=".22"/>
+      <path d="M960 470c0 190 130 300 130 490s-130 300-130 490" fill="none"
+            stroke="currentColor" stroke-width="52" stroke-linecap="round" opacity=".55"/>
+      <circle cx="960" cy="960" r="86" fill="currentColor"/>
+    </svg>
+  </a>
+  <div class="rail__tick"></div>
+  <div class="rail__read" id="railRead">Sugar <b>75%</b> of flour weight</div>
+  <div class="rail__tick"></div>
+  <div class="rail__read" id="railSec">Las Vegas, NV</div>
+</div>
+
+<header>
+  <a href="#cakes" data-nav="cakes">Cakes</a>
+  <a href="#savory" data-nav="savory">Bread</a>
+  <a href="#everyday" data-nav="everyday">Everyday</a>
+  <a href="#order" data-nav="order">Ordering</a>
+  <a href="#order" class="nav-inquire">Inquire</a>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="grid">
+      <div class="hero__type">
+        <div class="hero__eyebrow rv">
+          <span class="line"></span>
+          <span class="util">Cottage bakehouse · Las&nbsp;Vegas</span>
+        </div>
+        <h1>
+          <span class="line-mask"><span>Less sweet,</span></span>
+          <span class="line-mask"><span>still a <em class="lift">treat</em>.</span></span>
+        </h1>
+        <p class="hero__sub rv rv-d2">
+          Cakes and bread made the long way — browned butter, cultured
+          starter, real fruit — and pulled back on sugar until the flavour
+          underneath finally has room to speak.
+        </p>
+        <div class="hero__meta rv rv-d3">
+          <div><strong>5</strong><span class="util">Cake flavours</span></div>
+          <div><strong>72h</strong><span class="util">Lead time</span></div>
+          <div><strong>SNHD</strong><span class="util">Permitted</span></div>
+        </div>
+      </div>
+
+      <figure class="hero__plate rv rv-d2">
+        <div class="ph parallax" data-crop="Hero · 4:5 · 1600×2000" data-speed="0.045"></div>
+        <figcaption class="hero__cap">cut it thin,<br>eat it twice</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THESIS ============ -->
+  <section class="thesis" id="thesis">
+    <div class="grid">
+      <div class="thesis__label rv"><span class="util">The&nbsp;whole&nbsp;idea</span></div>
+      <div class="thesis__body">
+        <p class="rv">
+          Most bakeries run sugar at parity with flour. We hold it at
+          <em>seventy-five percent</em> — the floor where crumb still sets
+          but the butter, the cultured tang and the fruit stop competing
+          with sweetness.
+        </p>
+        <p class="thesis__note rv rv-d2">
+          Below that, structure fails: the crumb goes gummy and the loaf
+          collapses on cooling. So this isn't a health claim and it isn't a
+          sugar-free cake. It's a measured decision, made once, and held
+          across every recipe in the book.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CAKES ============ -->
+  <section class="cakes" id="cakes">
+    <div class="sec-head rv">
+      <h2>Cakes &amp; layer cakes</h2>
+      <span class="util">Five, made properly</span>
+    </div>
+
+    <article class="cake rv">
+      <div class="cake__idx"><span class="fig">01</span></div>
+      <div class="cake__body">
+        <h3>Vanilla Birthday Cake</h3>
+        <p class="cake__desc">Real vanilla bean, cultured butter, a tender high-ratio
+          crumb. The one everybody asks for, made like it matters.</p>
+        <div class="cake__spec">
+          <span><span class="util">Serves</span><b>8–24</b></span>
+          <span><span class="util">Lead time</span><b>3 days</b></span>
+          <span><span class="util">From</span><b>$68</b></span>
+        </div>
+        <p class="allerg"><b>Contains</b> wheat · eggs · milk</p>
+      </div>
+      <figure class="cake__img"><div class="ph" data-crop="3:4 · 1200×1600"></div></figure>
+    </article>
+
+    <article class="cake rv">
+      <div class="cake__idx"><span class="fig">02</span></div>
+      <div class="cake__body">
+        <h3>Chocolate Chocolate Crunch</h3>
+        <p class="cake__desc">Dark chocolate crumb, house brigadeiro, and a feuilletine
+          crunch sealed in cocoa butter so it stays crisp all the way to the plate.</p>
+        <div class="cake__spec">
+          <span><span class="util">Serves</span><b>8–24</b></span>
+          <span><span class="util">Lead time</span><b>3 days</b></span>
+          <span><span class="util">From</span><b>$76</b></span>
+        </div>
+        <p class="allerg"><b>Contains</b> wheat · eggs · milk · soy</p>
+      </div>
+      <figure class="cake__img"><div class="ph" data-crop="3:4 · 1200×1600"></div></figure>
+    </article>
+
+    <article class="cake rv">
+      <div class="cake__idx"><span class="fig">03</span></div>
+      <div class="cake__body">
+        <h3>Browned Butter Banana Cajeta Praline</h3>
+        <p class="cake__desc">Bananas roasted until the water's gone and the sugar
+          caramelises. Cajeta over caramel — goat's milk carries the salt better.</p>
+        <div class="cake__spec">
+          <span><span class="util">Serves</span><b>8–24</b></span>
+          <span><span class="util">Lead time</span><b>4 days</b></span>
+          <span><span class="util">From</span><b>$78</b></span>
+        </div>
+        <p class="allerg"><b>Contains</b> wheat · eggs · milk · tree nuts</p>
+      </div>
+      <figure class="cake__img"><div class="ph" data-crop="3:4 · 1200×1600"></div></figure>
+    </article>
+
+    <article class="cake rv">
+      <div class="cake__idx"><span class="fig">04</span></div>
+      <div class="cake__body">
+        <h3>Olive Oil Citrus</h3>
+        <p class="cake__desc">Cold-pressed olive oil, whole citrus, almost no butter.
+          Fruit changes with what's actually good at market that month.</p>
+        <div class="cake__spec">
+          <span><span class="util">Serves</span><b>8–16</b></span>
+          <span><span class="util">Lead time</span><b>3 days</b></span>
+          <span><span class="util">From</span><b>$64</b></span>
+        </div>
+        <p class="allerg"><b>Contains</b> wheat · eggs</p>
+      </div>
+      <figure class="cake__img"><div class="ph" data-crop="3:4 · 1200×1600"></div></figure>
+    </article>
+
+    <article class="cake rv">
+      <div class="cake__idx"><span class="fig">05</span></div>
+      <div class="cake__body">
+        <h3>Dulce de Leche Croustillant</h3>
+        <p class="cake__desc">Slow-cooked dulce de leche against a shattering praline
+          layer. Restrained, adult, and the least sweet thing on this list.</p>
+        <div class="cake__spec">
+          <span><span class="util">Serves</span><b>8–24</b></span>
+          <span><span class="util">Lead time</span><b>4 days</b></span>
+          <span><span class="util">From</span><b>$82</b></span>
+        </div>
+        <p class="allerg"><b>Contains</b> wheat · eggs · milk · tree nuts</p>
+      </div>
+      <figure class="cake__img"><div class="ph" data-crop="3:4 · 1200×1600"></div></figure>
+    </article>
+  </section>
+
+  <!-- ============ SAVORY — palette flips via data-family ============ -->
+  <section class="savory" id="savory" data-family="savory">
+    <div class="sec-head rv">
+      <h2>Bread &amp; focaccia</h2>
+      <span class="util">Baked to the week, not to order</span>
+    </div>
+    <div class="loaf">
+      <div class="loaf__lede">
+        <p class="lede rv">Slow ferment, blistered crust, and an open crumb
+          that took three days to earn.</p>
+        <p class="loaf__note rv rv-d2">Bread runs on a schedule because starter
+          does. Reserve by Wednesday for the weekend bake — quantities are fixed
+          by oven space, not by demand.</p>
+      </div>
+      <div class="loaf__list">
+        <div class="row rv"><span class="row__name">Country Sourdough</span><span class="row__day">Fri · Sat</span></div>
+        <div class="row rv rv-d1"><span class="row__name">Rosemary &amp; Sea Salt Focaccia</span><span class="row__day">Sat</span></div>
+        <div class="row rv rv-d1"><span class="row__name">Tomato &amp; Oregano Focaccia</span><span class="row__day">Sat</span></div>
+        <div class="row rv rv-d2"><span class="row__name">Olive &amp; Thyme Focaccia</span><span class="row__day">Sat</span></div>
+        <div class="row rv rv-d2"><span class="row__name">Caramelised Onion Focaccia</span><span class="row__day">Sat</span></div>
+        <div class="row rv rv-d3"><span class="row__name">Seeded Wholegrain Loaf</span><span class="row__day">Fri</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVERYDAY & INDIVIDUAL ============ -->
+  <section class="everyday" id="everyday">
+    <div class="sec-head rv">
+      <h2>Everyday &amp; individual</h2>
+      <span class="util">Small format · bake and pack</span>
+    </div>
+
+    <div class="case">
+      <article class="case__item rv">
+        <div class="ph" data-crop="1:1 · 1400×1400"></div>
+        <h3>Cookies</h3>
+        <p class="case__desc">Rested 36 hours, baked thick, edges crisp and
+          middles still soft. Sold by the half dozen.</p>
+        <ul class="case__list">
+          <li>Brown Butter Chocolate Chunk <span>Weekly</span></li>
+          <li>Oat &amp; Cajeta <span>Weekly</span></li>
+          <li>Dark Chocolate Rye <span>Rotating</span></li>
+          <li>Citrus Olive Oil Shortbread <span>Rotating</span></li>
+        </ul>
+        <div class="case__foot">
+          <span class="util">Half dozen from</span><b>$18</b>
+          <p class="allerg"><b>Contains</b> wheat · eggs · milk</p>
+        </div>
+      </article>
+
+      <article class="case__item rv rv-d1">
+        <div class="ph" data-crop="4:5 · 1400×1750"></div>
+        <h3>Cinnamon Rolls</h3>
+        <p class="case__desc">Enriched overnight dough, laminated with cinnamon
+          and browned butter. Glazed thin — the crumb does the work.</p>
+        <ul class="case__list">
+          <li>Classic Cinnamon <span>Sun</span></li>
+          <li>Cajeta Pecan <span>Sun</span></li>
+          <li>Orange Cardamom <span>Seasonal</span></li>
+        </ul>
+        <div class="case__foot">
+          <span class="util">Pan of six</span><b>$32</b>
+          <p class="allerg"><b>Contains</b> wheat · eggs · milk<br>May contain tree nuts</p>
+        </div>
+      </article>
+
+      <article class="case__item rv rv-d2">
+        <div class="ph" data-crop="1:1 · 1400×1400"></div>
+        <h3>Loaf Cakes</h3>
+        <p class="case__desc">Keeps four days wrapped, better on day two. The
+          one to buy when you want cake in the house all week.</p>
+        <ul class="case__list">
+          <li>Browned Butter Banana <span>Weekly</span></li>
+          <li>Olive Oil Citrus <span>Weekly</span></li>
+          <li>Dark Chocolate Rye <span>Rotating</span></li>
+        </ul>
+        <div class="case__foot">
+          <span class="util">Full loaf</span><b>$26</b>
+          <p class="allerg"><b>Contains</b> wheat · eggs · milk</p>
+        </div>
+      </article>
+
+      <article class="case__item rv rv-d3">
+        <div class="ph" data-crop="4:5 · 1400×1750"></div>
+        <h3>Individual Cakes</h3>
+        <p class="case__desc">The five layer cakes, built four inches across.
+          For two people, or for tasting before you commit to a tier.</p>
+        <ul class="case__list">
+          <li>Vanilla Birthday <span>48h</span></li>
+          <li>Chocolate Crunch <span>48h</span></li>
+          <li>Dulce de Leche Croustillant <span>48h</span></li>
+        </ul>
+        <div class="case__foot">
+          <span class="util">Each · serves 2</span><b>$14</b>
+          <p class="allerg"><b>Contains</b> wheat · eggs · milk<br>May contain tree nuts · soy</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ ORDERING ============ -->
+  <section class="order" id="order">
+    <div class="grid">
+      <div class="order__head">
+        <span class="util rv">How it works</span>
+        <h2 class="rv" style="margin-top:20px">Tell me the date, I'll tell you what's possible.</h2>
+        <a class="cta rv rv-d2" href="#order">Start an inquiry <span class="arrow">→</span></a>
+        <p class="lead-note rv rv-d2">Custom cakes need 72 hours minimum. Tiered cakes, two weeks.</p>
+      </div>
+      <div class="order__steps">
+        <div class="step rv">
+          <span class="fig">01</span>
+          <div><h4>Send the details</h4>
+          <p>Date, headcount, flavour, and every allergy at the table. The
+          allergy field is the one I read first.</p></div>
+        </div>
+        <div class="step rv rv-d1">
+          <span class="fig">02</span>
+          <div><h4>We confirm together</h4>
+          <p>You'll get a written quote with the exact size, price and pickup
+          window. Nothing is booked until you say yes.</p></div>
+        </div>
+        <div class="step rv rv-d2">
+          <span class="fig">03</span>
+          <div><h4>Pickup or local delivery</h4>
+          <p>Pickup from the bakehouse, or delivery inside the Las Vegas valley
+          for a flat fee. Cakes travel flat and cold.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="grid">
+    <div class="f-brand">
+      <svg viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg" aria-label="Nenas Bakehouse">
+        <circle cx="960" cy="960" r="880" fill="none" stroke="currentColor" stroke-width="46" opacity=".3"/>
+        <path d="M960 470c0 190 130 300 130 490s-130 300-130 490" fill="none"
+              stroke="currentColor" stroke-width="52" stroke-linecap="round" opacity=".6"/>
+        <circle cx="960" cy="960" r="86" fill="currentColor"/>
+      </svg>
+      <p class="f-tag">Less sweet, still a treat</p>
+    </div>
+    <div class="f-col">
+      <h5>Menu</h5>
+      <a href="#cakes">Cakes</a><a href="#savory">Bread &amp; focaccia</a>
+      <a href="#everyday">Cookies</a><a href="#everyday">Cinnamon rolls</a>
+      <a href="#everyday">Loaf cakes</a><a href="#everyday">Individual cakes</a>
+    </div>
+    <div class="f-col">
+      <h5>Ordering</h5>
+      <a href="#order">Inquire</a><a href="#order">Lead times</a>
+      <a href="#order">Pickup &amp; delivery</a><a href="#order">Cancellations</a>
+    </div>
+    <div class="f-col">
+      <h5>Allergens</h5>
+      <a href="#cakes">Full declarations</a><a href="#order">Ask a question</a>
+    </div>
+    <div class="f-col">
+      <h5>Reach me</h5>
+      <a href="#order">hello@nenasbakehouse.com</a><a href="#order">Instagram</a>
+    </div>
+    <div class="disclosure">
+      <p><strong>Cottage food disclosure —</strong> Made in a cottage food operation
+      that is not subject to Nevada food safety regulations. Permitted by the
+      Southern Nevada Health District. <em>Placeholder wording — replace with the
+      exact SNHD-approved sentence before launch.</em></p>
+      <p>© 2026 Nenas Bakehouse · Las Vegas, Nevada</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // headline sets on load
+  requestAnimationFrame(function(){ document.body.classList.add('ready'); });
+
+  // scroll reveals
+  var items = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  // hero parallax — small, cheap, rAF-throttled
+  var pl = document.querySelectorAll('.parallax');
+  if (!reduce && pl.length) {
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        var y = window.scrollY;
+        pl.forEach(function(el){
+          var s = parseFloat(el.dataset.speed || 0.04);
+          el.style.transform = 'translate3d(0,' + (-y * s) + 'px,0)';
+        });
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
+  // the baker's margin reads the section you're in
+  var reads = [
+    ['hero',    'Sugar <b>75%</b> of flour weight', 'Las Vegas, NV'],
+    ['thesis',  'Flour <b>1000g</b> · Sugar <b>750g</b>',  'The floor, not a target'],
+    ['cakes',   'Bake <b>335°F</b> · <b>28 min</b>', 'Five flavours'],
+    ['savory',  'Ferment <b>72h</b> at <b>76°F</b>',  'Friday &amp; Saturday bake'],
+    ['everyday','Dough rested <b>36h</b>',            'Bake and pack'],
+    ['order',   'Lead time <b>72h</b> minimum',      'Tiered cakes · 2 weeks']
+  ];
+  var railRead = document.getElementById('railRead');
+  var railSec  = document.getElementById('railSec');
+  var rail     = document.getElementById('rail');
+  var secs = reads.map(function(r){ return document.getElementById(r[0]); });
+  var navLinks = document.querySelectorAll('header a[data-nav]');
+  var body = document.body;
+  var lastY = window.scrollY;
+
+  function updateNav(idx){
+    var y = window.scrollY;
+
+    // background appears only after the hero is gone
+    body.classList.toggle('nav-solid', y > window.innerHeight * 0.72);
+
+    // retract going down, return going up — never hide near the top
+    var delta = y - lastY;
+    if (y > 240 && delta > 4)       body.classList.add('nav-hide');
+    else if (delta < -4 || y < 240) body.classList.remove('nav-hide');
+    lastY = y;
+
+    // the bar borrows the sage palette while the savory section owns the screen
+    var zone = reads[idx][0] === 'savory' ? 'savory' : 'sweet';
+    if (body.dataset.zone !== zone) body.dataset.zone = zone;
+
+    // mark the section you're actually in
+    var here = reads[idx][0];
+    navLinks.forEach(function(a){ a.classList.toggle('on', a.dataset.nav === here); });
+  }
+
+  function currentIdx(){
+    var mid = window.scrollY + window.innerHeight * 0.4, idx = 0;
+    secs.forEach(function(s, i){ if (s && s.offsetTop <= mid) idx = i; });
+    return idx;
+  }
+
+  function updateRail(){
+    var idx = currentIdx();
+    updateNav(idx);
+    if (railRead.dataset.i === String(idx)) return;
+    railRead.dataset.i = String(idx);
+    [railRead, railSec].forEach(function(el){ el.style.opacity = '0'; });
+    setTimeout(function(){
+      railRead.innerHTML = reads[idx][1];
+      railSec.innerHTML  = reads[idx][2];
+      // rail adopts the sage palette while the savory section owns the screen
+      var savory = reads[idx][0] === 'savory';
+      rail.style.color = savory ? 'var(--deep-olive)' : 'var(--espresso)';
+      [railRead, railSec].forEach(function(el){ el.style.opacity = '1'; });
+    }, 220);
+  }
+
+  // clicking a nav link must not leave the bar retracted
+  navLinks.forEach(function(a){
+    a.addEventListener('click', function(){ body.classList.remove('nav-hide'); });
+  });
+
+  [railRead, railSec].forEach(function(el){ el.style.transition = 'opacity .22s ease'; });
+
+  var pending = false;
+  window.addEventListener('scroll', function(){
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function(){ updateRail(); pending = false; });
+  }, { passive: true });
+  updateRail();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nenasbakehouse.com/sitemap-index.xml

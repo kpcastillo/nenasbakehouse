@@ -1,0 +1,47 @@
+---
+import BrandMark from './BrandMark.astro';
+import { site, compliance } from '../data/site.js';
+---
+<footer>
+  <div class="grid">
+    <div class="f-brand">
+      <BrandMark label="Nenas Bakehouse" ringOpacity={0.3} curveOpacity={0.6} />
+      <p class="f-tag">{site.tagline}</p>
+    </div>
+    <div class="f-col">
+      <h5>Menu</h5>
+      <a href="#cakes">Cakes</a>
+      <a href="#savory">Bread &amp; focaccia</a>
+      <a href="#everyday">Cookies</a>
+      <a href="#everyday">Cinnamon rolls</a>
+      <a href="#everyday">Loaf cakes</a>
+      <a href="#everyday">Individual cakes</a>
+    </div>
+    <div class="f-col">
+      <h5>Ordering</h5>
+      <a href="#order">Inquire</a>
+      <a href="#order">Lead times</a>
+      <a href="#order">Pickup &amp; delivery</a>
+      <a href="#inquiry">Cancellations</a>
+    </div>
+    <div class="f-col">
+      <h5>Allergens</h5>
+      <a href="#cakes">Full declarations</a>
+      <a href="#inquiry">Ask a question</a>
+    </div>
+    <div class="f-col">
+      <h5>Reach me</h5>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <a href={site.instagram.url} target="_blank" rel="noopener">Instagram {site.instagram.handle}</a>
+    </div>
+    <div class="disclosure">
+      <p>
+        <strong>Cottage food disclosure —</strong> {compliance.disclosure}
+        {compliance.disclosureIsPlaceholder && (
+          <em> Placeholder wording — replace with the exact SNHD-approved sentence before launch.</em>
+        )}
+      </p>
+      <p>{compliance.copyright}</p>
+    </div>
+  </div>
+</footer>

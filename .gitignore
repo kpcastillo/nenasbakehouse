@@ -1,0 +1,27 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# netlify
+.netlify/
+
+# env
+.env
+.env.production
+.env.*.local
+
+# os / editor
+.DS_Store
+*.log
+npm-debug.log*
+.vscode/
+.idea/
+
+# generated preview build
+preview/

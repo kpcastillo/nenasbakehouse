@@ -1,0 +1,55 @@
+// Layer cakes. `image` is a path under /public once real photos land;
+// null renders a labelled placeholder frame at 3:4.
+
+export const cakes = [
+  {
+    idx: '01',
+    name: 'Vanilla Birthday Cake',
+    desc: 'Real vanilla bean, cultured butter, a tender high-ratio crumb. The one everybody asks for, made like it matters.',
+    serves: '8–24',
+    lead: '3 days',
+    from: '$68',
+    contains: 'wheat · eggs · milk',
+    image: null,
+  },
+  {
+    idx: '02',
+    name: 'Chocolate Chocolate Crunch',
+    desc: 'Dark chocolate crumb, house brigadeiro, and a feuilletine crunch sealed in cocoa butter so it stays crisp all the way to the plate.',
+    serves: '8–24',
+    lead: '3 days',
+    from: '$76',
+    contains: 'wheat · eggs · milk · soy',
+    image: null,
+  },
+  {
+    idx: '03',
+    name: 'Browned Butter Banana Cajeta Praline',
+    desc: "Bananas roasted until the water's gone and the sugar caramelises. Cajeta over caramel — goat's milk carries the salt better.",
+    serves: '8–24',
+    lead: '4 days',
+    from: '$78',
+    contains: 'wheat · eggs · milk · tree nuts',
+    image: null,
+  },
+  {
+    idx: '04',
+    name: 'Olive Oil Citrus',
+    desc: "Cold-pressed olive oil, whole citrus, almost no butter. Fruit changes with what's actually good at market that month.",
+    serves: '8–16',
+    lead: '3 days',
+    from: '$64',
+    contains: 'wheat · eggs',
+    image: null,
+  },
+  {
+    idx: '05',
+    name: 'Dulce de Leche Croustillant',
+    desc: 'Slow-cooked dulce de leche against a shattering praline layer. Restrained, adult, and the least sweet thing on this list.',
+    serves: '8–24',
+    lead: '4 days',
+    from: '$82',
+    contains: 'wheat · eggs · milk · tree nuts',
+    image: null,
+  },
+];

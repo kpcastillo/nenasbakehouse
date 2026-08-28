@@ -1,0 +1,111 @@
+---
+import { site } from '../data/site.js';
+---
+<div class="inquiry" id="inquiry">
+  <div class="inquiry__grid">
+    <div class="inquiry__intro rv">
+      <span class="util">Order inquiry</span>
+      <p>Tell me what you're thinking. I'll reply with what's possible for your date, the exact size, and a price.</p>
+      <p class="fineprint">
+        This is an inquiry, not a booking — nothing is charged here. Custom cakes
+        need {site.leadTimes.custom}; tiered cakes, {site.leadTimes.tiered}. I read
+        every message myself and usually reply within two days.
+      </p>
+    </div>
+
+    <form
+      class="inquiry__form rv rv-d1"
+      name="inquiry"
+      method="POST"
+      action="/thank-you"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="inquiry" />
+      <p class="hp">
+        <label>Leave this field empty if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <div class="field field--pair">
+        <div>
+          <label for="name">Your name <span class="req">*</span></label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+        <div>
+          <label for="email">Email <span class="req">*</span></label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="field field--pair">
+        <div>
+          <label for="phone">Phone <span class="fig">(optional)</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" />
+        </div>
+        <div>
+          <label for="event-date">Date you need it <span class="req">*</span></label>
+          <input id="event-date" name="event-date" type="date" required />
+        </div>
+      </div>
+
+      <div class="field field--pair">
+        <div>
+          <label for="type">What are you after? <span class="req">*</span></label>
+          <select id="type" name="type" required>
+            <option value="" selected disabled>Choose one…</option>
+            <option>Layer cake</option>
+            <option>Tiered cake</option>
+            <option>Individual / mini cakes</option>
+            <option>Cookies</option>
+            <option>Cinnamon rolls</option>
+            <option>Loaf cake</option>
+            <option>Bread &amp; focaccia</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div>
+          <label for="servings">How many people?</label>
+          <input id="servings" name="servings" type="text" placeholder="e.g. 20" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="flavour">Flavour you're leaning toward</label>
+        <input id="flavour" name="flavour" type="text" placeholder="Browsed the menu? Name one — or describe the vibe." />
+      </div>
+
+      <div class="field field--allergy">
+        <label for="allergies">Allergies &amp; dietary needs <span class="req">*</span></label>
+        <textarea
+          id="allergies"
+          name="allergies"
+          required
+          placeholder="List every allergy at the table, or write “none”. This is the field I read first."
+        ></textarea>
+        <p class="field__hint">
+          The kitchen handles wheat, eggs, dairy, tree nuts, and soy. I can't
+          guarantee an allergen-free environment, but tell me and we'll talk through it.
+        </p>
+      </div>
+
+      <fieldset class="fieldset">
+        <legend>Pickup or delivery?</legend>
+        <div class="radio-row">
+          <label><input type="radio" name="fulfilment" value="Pickup" checked /> Pickup from the bakehouse</label>
+          <label><input type="radio" name="fulfilment" value="Local delivery" /> Local delivery ({site.serviceArea})</label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="details">Anything else</label>
+        <textarea id="details" name="details" placeholder="Occasion, colours, inspiration, dietary context — whatever helps."></textarea>
+      </div>
+
+      <button class="submit" type="submit">Send inquiry <span class="arrow">→</span></button>
+      <p class="form-foot">
+        By sending this you agree I can email you back about your order. I won't add
+        you to any list or share your details.
+      </p>
+    </form>
+  </div>
+</div>

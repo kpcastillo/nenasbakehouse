@@ -1,0 +1,18 @@
+---
+// A photo frame that renders a real <img> when `src` is set, otherwise a
+// labelled placeholder at the given crop.
+interface Props {
+  src?: string | null;
+  alt?: string;
+  crop: string;
+  speed?: number | null;
+  class?: string;
+}
+const { src = null, alt = '', crop, speed = null, class: cls = '' } = Astro.props;
+const classes = ['ph', src ? 'has-img' : '', speed != null ? 'parallax' : '', cls]
+  .filter(Boolean)
+  .join(' ');
+---
+<div class={classes} data-crop={crop} data-speed={speed ?? undefined}>
+  {src && <img src={src} alt={alt} loading="lazy" decoding="async" />}
+</div>
