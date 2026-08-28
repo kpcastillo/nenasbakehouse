@@ -1,9 +1,15 @@
 ---
 import { nav } from '../data/site.js';
+import Wordmark from './Wordmark.astro';
 ---
 <header>
-  {nav.map((item) => (
-    <a href={item.href} data-nav={item.key}>{item.label}</a>
-  ))}
-  <a href="#order" class="nav-inquire">Inquire</a>
+  <a href="#main" class="brand" aria-label="Nenas Bakehouse — home">
+    <Wordmark class="brand__mark" />
+  </a>
+  <nav class="nav">
+    {nav.map((item) => (
+      <a href={item.href} data-nav={item.key}>{item.label}</a>
+    ))}
+    <a href="#inquiry" class="nav-inquire">Inquire</a>
+  </nav>
 </header>

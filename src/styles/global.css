@@ -63,28 +63,38 @@ a { color: inherit; text-decoration: none; }
    ============================================================ */
 header {
   position: fixed; top: 0; left: var(--rail); right: 0;
-  display: flex; justify-content: flex-end; align-items: center; gap: 38px;
-  padding: 30px var(--gutter); z-index: 30;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  padding: 26px var(--gutter); z-index: 30;
   background: transparent; border-bottom: 1px solid transparent;
   transition: transform .5s cubic-bezier(.22, .7, .25, 1),
     background .4s ease, border-color .4s ease,
     padding .4s ease, backdrop-filter .4s ease;
 }
-header a {
+
+/* wordmark, top-left */
+.brand { display: flex; align-items: center; flex: none; }
+.brand__mark {
+  height: 24px; width: auto; display: block;
+  color: var(--espresso); transition: color .3s ease;
+}
+body[data-zone="savory"] .brand__mark { color: var(--deep-olive); }
+
+.nav { display: flex; align-items: center; gap: 38px; }
+.nav a {
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   font-weight: 400; color: var(--whisper); transition: color .3s;
   position: relative; padding-bottom: 3px;
 }
-header a:hover { color: var(--espresso); }
+.nav a:hover { color: var(--espresso); }
 
 /* active section marker — a 1px underline, nothing louder */
-header a::after {
+.nav a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
   background: currentColor; transform: scaleX(0); transform-origin: left;
   transition: transform .4s cubic-bezier(.22, .7, .25, 1);
 }
-header a.on { color: var(--espresso); }
-header a.on::after { transform: scaleX(1); }
+.nav a.on { color: var(--espresso); }
+.nav a.on::after { transform: scaleX(1); }
 
 /* condensed state, once past the hero */
 body.nav-solid header {
@@ -95,9 +105,9 @@ body.nav-solid header {
   border-bottom-color: var(--rule);
 }
 /* over the sage section the bar adopts the savory palette */
-body[data-zone="savory"] header a { color: color-mix(in srgb, var(--deep-olive) 56%, transparent); }
-body[data-zone="savory"] header a:hover,
-body[data-zone="savory"] header a.on { color: var(--deep-olive); }
+body[data-zone="savory"] .nav a { color: color-mix(in srgb, var(--deep-olive) 56%, transparent); }
+body[data-zone="savory"] .nav a:hover,
+body[data-zone="savory"] .nav a.on { color: var(--deep-olive); }
 body[data-zone="savory"].nav-solid header {
   background: color-mix(in srgb, var(--sage-mist) 86%, transparent);
   border-bottom-color: color-mix(in srgb, var(--deep-olive) 16%, transparent);
@@ -394,7 +404,11 @@ footer {
 }
 footer .grid { gap: 24px; }
 .f-brand { grid-column: 1 / span 4; }
-.f-brand svg { width: 78px; height: 78px; display: block; margin-bottom: 22px; }
+.f-brand .f-logo {
+  width: 172px; height: auto; display: block; margin-bottom: 24px;
+  color: var(--linen);
+  --logo-void: var(--espresso); /* footer ground shows through the cut-outs */
+}
 .f-tag { font-family: var(--hand); font-size: 23px; color: var(--honey); }
 .f-col { grid-column: span 2; }
 .f-col h5 {
@@ -482,8 +496,10 @@ footer .grid { gap: 24px; }
 }
 @media (max-width: 640px) {
   :root { --rail: 52px; }
-  header { gap: 16px; padding-top: 20px; padding-bottom: 20px; }
-  header a { font-size: 9.5px; letter-spacing: .13em; }
+  header { gap: 14px; padding-top: 18px; padding-bottom: 18px; }
+  .brand__mark { height: 19px; }
+  .nav { gap: 14px; }
+  .nav a { font-size: 9.5px; letter-spacing: .13em; }
   .nav-inquire { display: none; }
   body.nav-solid header { padding-top: 13px; padding-bottom: 13px; }
   section { scroll-margin-top: 66px; }
@@ -501,4 +517,9 @@ footer .grid { gap: 24px; }
   .field--pair { grid-template-columns: 1fr; gap: 26px; }
   .f-col { grid-column: span 6; }
   .disclosure { flex-direction: column; gap: 14px; }
+}
+/* phones: the header gets tight — the wordmark still leads the footer */
+@media (max-width: 600px) {
+  .brand { display: none; }
+  header { justify-content: flex-end; }
 }
