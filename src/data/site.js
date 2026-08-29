@@ -32,6 +32,6 @@ export const nav = [
 export const compliance = {
   disclosure:
     'MADE IN A COTTAGE FOOD OPERATION THAT IS NOT SUBJECT TO GOVERNMENT FOOD SAFETY INSPECTION. Permitted by the Southern Nevada Health District.',
-  disclosureIsPlaceholder: true,
+  disclosureIsPlaceholder: false,
   copyright: `© ${new Date().getFullYear()} Nenas Bakehouse · Las Vegas, Nevada`,
 };
