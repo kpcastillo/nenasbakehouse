@@ -4,7 +4,6 @@ import Rail from '../components/Rail.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Frame from '../components/Frame.astro';
-import InquiryForm from '../components/InquiryForm.astro';
 import { cakes } from '../data/cakes.js';
 import { breads } from '../data/breads.js';
 import { everyday } from '../data/everyday.js';
@@ -163,7 +162,7 @@ const cropLabel = (ratio: string) =>
         <div class="order__head">
           <span class="util rv">How it works</span>
           <h2 class="rv" style="margin-top:20px">Tell me the date, I'll tell you what's possible.</h2>
-          <a class="cta rv rv-d2" href="#inquiry">Start an inquiry <span class="arrow">→</span></a>
+          <a class="cta rv rv-d2" href="/inquire">Start an inquiry <span class="arrow">→</span></a>
           <p class="lead-note rv rv-d2">
             Custom cakes need {site.leadTimes.custom}. Tiered cakes, {site.leadTimes.tiered}.
           </p>
@@ -192,8 +191,6 @@ const cropLabel = (ratio: string) =>
           </div>
         </div>
       </div>
-
-      <InquiryForm />
     </section>
   </main>
 

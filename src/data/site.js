@@ -20,11 +20,12 @@ export const site = {
   },
 };
 
+// hrefs are root-absolute so the nav works from every page, not just home
 export const nav = [
-  { href: '#cakes', label: 'Cakes', key: 'cakes' },
-  { href: '#savory', label: 'Bread', key: 'savory' },
-  { href: '#everyday', label: 'Everyday', key: 'everyday' },
-  { href: '#order', label: 'Ordering', key: 'order' },
+  { href: '/#cakes', label: 'Cakes', key: 'cakes' },
+  { href: '/#savory', label: 'Bread', key: 'savory' },
+  { href: '/#everyday', label: 'Everyday', key: 'everyday' },
+  { href: '/#order', label: 'Ordering', key: 'order' },
 ];
 
 // TODO(before launch): replace with the exact wording the Southern Nevada

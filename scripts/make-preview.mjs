@@ -26,6 +26,7 @@ html = html.replace(cssMatch[0], `<style>${css}</style>`);
 const favicon = readFileSync(resolve(dist, 'favicon.svg'), 'utf8');
 const faviconData = 'data:image/svg+xml;base64,' + Buffer.from(favicon).toString('base64');
 html = html.replace('href="/favicon.svg"', `href="${faviconData}"`);
+const faviconLink = html.match(/<link rel="icon"[^>]*>/)[0];
 
 // 3. pull out the pieces the standalone page needs
 const headStyle = html.match(/<style>[\s\S]*?<\/style>/)[0];
@@ -36,7 +37,14 @@ const fontLinks = [
   '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
   html.match(/<link href="https:\/\/fonts\.googleapis\.com[^>]+>/)[0],
 ].join('\n');
-const bodyInner = html.match(/<body>([\s\S]*)<\/body>/)[1];
+let bodyInner = html.match(/<body>([\s\S]*)<\/body>/)[1];
+
+// 3b. the inquiry form lives on its own page in the real site; splice its
+// section into the single-file preview so the form is still visible here.
+const inquireHtml = readFileSync(resolve(dist, 'inquire/index.html'), 'utf8');
+const inquireSection = inquireHtml.match(/<section class="order"[\s\S]*?<\/section>\s*<\/main>/)[0]
+  .replace(/<\/main>$/, '');
+bodyInner = bodyInner.replace('</main>', `${inquireSection}</main>`);
 
 // 4. preview-only: intercept the Netlify form submit, confirm inline
 const previewScript = `<script>
@@ -60,7 +68,7 @@ const previewScript = `<script>
 })();
 </script>`;
 
-const out = `<title>Nenas Bakehouse</title>\n${fontLinks}\n${jsonLd}\n${headStyle}\n${jsGuard}\n${bodyInner}\n${previewScript}\n`;
+const out = `<title>Nenas Bakehouse</title>\n${faviconLink}\n${fontLinks}\n${jsonLd}\n${headStyle}\n${jsGuard}\n${bodyInner}\n${previewScript}\n`;
 
 mkdirSync(resolve(root, 'preview'), { recursive: true });
 const dest = resolve(root, 'preview/nenas-home.preview.html');

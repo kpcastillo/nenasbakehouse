@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { site } from '../data/site.js';
+---
+<Base
+  title={`Start an inquiry — ${site.name}`}
+  description="Send Nenas Bakehouse the details for a custom cake, bread, or everyday order. It's an inquiry, not a booking — nothing is charged."
+>
+  <Rail />
+  <SiteHeader />
+
+  <main id="main">
+    <section class="order" id="order">
+      <div class="grid">
+        <div class="order__head">
+          <span class="util rv">Ordering</span>
+          <h2 class="rv" style="margin-top:20px">Tell me the date, I'll tell you what's possible.</h2>
+          <a class="cta rv rv-d2" href="/#cakes">See the menu first <span class="arrow">→</span></a>
+          <p class="lead-note rv rv-d2">
+            Custom cakes need {site.leadTimes.custom}. Tiered cakes, {site.leadTimes.tiered}.
+          </p>
+        </div>
+        <div class="order__steps">
+          <div class="step rv">
+            <span class="fig">01</span>
+            <div>
+              <h4>Send the details</h4>
+              <p>Date, headcount, flavour, and every allergy at the table. The allergy field is the one I read first.</p>
+            </div>
+          </div>
+          <div class="step rv rv-d1">
+            <span class="fig">02</span>
+            <div>
+              <h4>We confirm together</h4>
+              <p>You'll get a written quote with the exact size, price and pickup window. Nothing is booked until you say yes.</p>
+            </div>
+          </div>
+          <div class="step rv rv-d2">
+            <span class="fig">03</span>
+            <div>
+              <h4>Pickup or local delivery</h4>
+              <p>Pickup from the bakehouse, or delivery inside the {site.serviceArea} for a flat fee. Cakes travel flat and cold.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <InquiryForm />
+    </section>
+  </main>
+
+  <SiteFooter />
+</Base>
