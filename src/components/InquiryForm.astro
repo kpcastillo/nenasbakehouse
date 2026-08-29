@@ -74,6 +74,15 @@ import { site } from '../data/site.js';
         <input id="flavour" name="flavour" type="text" placeholder="Browsed the menu? Name one — or describe the vibe." />
       </div>
 
+      <fieldset class="fieldset">
+        <legend>Personalized cake topper?</legend>
+        <div class="radio-row">
+          <label><input type="radio" name="cake-topper" value="Yes" /> Yes, I'd like one</label>
+          <label><input type="radio" name="cake-topper" value="No" checked /> No</label>
+        </div>
+        <p class="field__hint">If yes, put the exact wording (and any name or age) in “Anything else” below.</p>
+      </fieldset>
+
       <div class="field field--allergy">
         <label for="allergies">Allergies &amp; dietary needs <span class="req">*</span></label>
         <textarea
