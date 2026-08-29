@@ -31,7 +31,7 @@ export const nav = [
 // Health District requires on your permit. This is placeholder phrasing.
 export const compliance = {
   disclosure:
-    'Made in a cottage food operation that is not subject to Nevada food safety regulations. Permitted by the Southern Nevada Health District.',
+    'MADE IN A COTTAGE FOOD OPERATION THAT IS NOT SUBJECT TO GOVERNMENT FOOD SAFETY INSPECTION. Permitted by the Southern Nevada Health District.',
   disclosureIsPlaceholder: true,
   copyright: `© ${new Date().getFullYear()} Nenas Bakehouse · Las Vegas, Nevada`,
 };
