@@ -48,9 +48,9 @@
   if (!rail || !railRead || !railSec) return;
 
   var reads = [
-    ['hero', 'Sugar <b>75%</b> of flour weight', 'Las Vegas, NV'],
-    ['thesis', 'Flour <b>1000g</b> · Sugar <b>750g</b>', 'The floor, not a target'],
-    ['cakes', 'Bake <b>335&deg;F</b> · <b>28 min</b>', 'Five flavours'],
+    ['hero', 'Nenas Bakehouse', 'Las Vegas, NV'],
+    ['thesis', 'Less sugar, more flavor', 'Freshly Baked'],
+    ['cakes', 'Wholesome ingredients', 'Cakes, pastries and breads'],
     ['savory', 'Ferment <b>72h</b> at <b>76&deg;F</b>', 'Friday &amp; Saturday bake'],
     ['everyday', 'Dough rested <b>36h</b>', 'Bake and pack'],
     ['order', 'Lead time <b>72h</b> minimum', 'Tiered cakes · 2 weeks'],
