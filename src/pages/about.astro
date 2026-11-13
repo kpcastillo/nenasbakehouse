@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHead from '../components/PageHead.astro';
+import Frame from '../components/Frame.astro';
+import { site } from '../data/site.js';
+
+const schema = [
+  {
+    '@type': 'AboutPage',
+    name: 'About Nenas Bakehouse',
+    url: `${site.url}/about`,
+    about: { '@id': `${site.url}/#bakery` },
+  },
+];
+---
+<Base
+  title="About Nena | Nenas Bakehouse, Las Vegas"
+  description="Nena is the baker behind Nenas Bakehouse, a home-based cottage bakery in Las Vegas. She bakes for customers the way she bakes for her own family: real ingredients and less sugar."
+  schema={schema}
+>
+  <Rail />
+  <SiteHeader />
+  <main id="main">
+    <PageHead eyebrow="The baker" title="Nena is me." pattern="dots"
+      lede="Nenas means “Nena's”: something that is mine, made by me, with care." />
+
+    <section class="prose-wrap">
+      <figure class="prose__img rv">
+        <Frame photo="nena" alt="Nena, the baker behind Nenas Bakehouse" pattern="stripes" ratio="4/5"
+          sizes="(max-width: 760px) 80vw, 30vw" />
+      </figure>
+      <div class="prose rv">
+        <h2>Where the name comes from</h2>
+        <p>
+          Nena has been my nickname since I was a baby. My family uses it, my
+          friends and their families use it, and sometimes my own kids do too.
+          So when I named the bakery, the answer was already there.
+        </p>
+        <h2>How I bake</h2>
+        <p>
+          I won't sell you anything I wouldn't serve my own family. I bake for
+          you the same wholesome way I bake for them at home, with real
+          ingredients.
+        </p>
+        <h2>Less sweet, still a treat</h2>
+        <p>
+          I hold sugar at about 75% of the flour weight, where many recipes use
+          equal parts. It's still dessert. You just taste the butter, the fruit
+          and the chocolate first.
+        </p>
+        <h2>The practical part</h2>
+        <p>
+          Nenas Bakehouse is a home-based cottage food operation in Las Vegas,
+          permitted by the Southern Nevada Health District. Everything is made
+          by pre-order, for pickup or delivery within the {site.serviceArea}.
+        </p>
+        <a class="btn" href="/inquire">Start a pre-order <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

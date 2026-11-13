@@ -5,8 +5,9 @@ export const site = {
   tagline: 'Less sweet, still a treat',
   domain: 'nenasbakehouse.com',
   url: 'https://nenasbakehouse.com',
+  title: 'Nenas Bakehouse | Less-Sweet Custom Cakes & Sourdough in Las Vegas',
   description:
-    'A cottage bakehouse in Las Vegas making cakes and bread the long way — browned butter, cultured starter, real fruit — with sugar held at 75% of flour weight so the flavour underneath has room to speak.',
+    'Nenas Bakehouse is a home-based cottage bakery in Las Vegas, NV. Custom cakes, slow-fermented sourdough, focaccia, cookies and cinnamon rolls made with real ingredients and less sugar. Pre-order for pickup or local delivery.',
   location: 'Las Vegas, NV',
   serviceArea: 'Las Vegas valley',
   email: 'nenasbakehouselv@gmail.com',
@@ -18,21 +19,23 @@ export const site = {
     custom: '72 hours minimum',
     tiered: 'two weeks',
   },
+  // The allergens handled in the kitchen. Per-product "Contains" lines come
+  // from the SNHD labels in menu.js, never from this list.
+  kitchenAllergens: 'wheat, eggs, milk, tree nuts, and soy',
 };
 
-// hrefs are root-absolute so the nav works from every page, not just home
+// Header nav. `only` hides a link on phones ("wide") or on desktop ("narrow").
 export const nav = [
-  { href: '/#cakes', label: 'Cakes', key: 'cakes' },
-  { href: '/#savory', label: 'Bread', key: 'savory' },
-  { href: '/#everyday', label: 'Everyday', key: 'everyday' },
-  { href: '/#order', label: 'Ordering', key: 'order' },
+  { href: '/#menu', label: 'Menu', only: 'narrow' },
+  { href: '/custom-cakes', label: 'Cakes', only: 'wide' },
+  { href: '/sourdough-focaccia', label: 'Bread', only: 'wide' },
+  { href: '/#everyday', label: 'Treats', only: 'wide' },
+  { href: '/about', label: 'About' },
+  { href: '/faq', label: 'FAQ' },
 ];
 
-// TODO(before launch): replace with the exact wording the Southern Nevada
-// Health District requires on your permit. This is placeholder phrasing.
 export const compliance = {
   disclosure:
     'MADE IN A COTTAGE FOOD OPERATION THAT IS NOT SUBJECT TO GOVERNMENT FOOD SAFETY INSPECTION. Permitted by the Southern Nevada Health District.',
-  disclosureIsPlaceholder: false,
   copyright: `© ${new Date().getFullYear()} Nenas Bakehouse · Las Vegas, Nevada`,
 };

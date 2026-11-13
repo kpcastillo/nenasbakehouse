@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHead from '../components/PageHead.astro';
+import { faqs } from '../data/faq.js';
+import { site } from '../data/site.js';
+
+const schema = [
+  {
+    '@type': 'FAQPage',
+    '@id': `${site.url}/faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+<Base
+  title="Questions & Answers | Nenas Bakehouse, Las Vegas"
+  description="How to order from Nenas Bakehouse in Las Vegas: lead times, prices, pickup and delivery, allergens, and what “less sweet” and “cottage food” mean."
+  schema={schema}
+>
+  <Rail />
+  <SiteHeader />
+  <main id="main">
+    <PageHead eyebrow="Good to know" title="Questions, answered." pattern="stripes"
+      lede="Ordering, timing, prices and allergens. If yours isn't here, ask me." />
+
+    <section class="faq">
+      {faqs.map((f) => (
+        <article class="faq__item rv" id={f.id}>
+          <h2>{f.q}</h2>
+          <p>{f.a}</p>
+        </article>
+      ))}
+      <div class="faq__more rv">
+        <a class="btn" href="/inquire">Ask a question or pre-order <span class="arrow" aria-hidden="true">→</span></a>
+        <p>Or email <a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

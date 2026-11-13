@@ -1,5 +1,8 @@
 /* ============================================================
-   TOKENS — colour ladder, type, and layout rails.
+   TOKENS — colour ladder, type, patterns and layout rails.
+   Text colours follow the brand kit pairing rules: espresso and
+   caramel for text on linen, deep olive on sage; ginger, crust and
+   sage leaf are for display type and decoration only.
    ============================================================ */
 :root {
   /* warm ladder */
@@ -18,24 +21,37 @@
   /* semantic */
   --surface: var(--linen);
   --ink: var(--espresso);
-  --accent: var(--ginger);
-  --rule: color-mix(in srgb, var(--espresso) 14%, transparent);
-  --whisper: color-mix(in srgb, var(--espresso) 52%, transparent);
+  --accent: var(--ginger);        /* display type + decoration (3.3:1) */
+  --accent-text: var(--caramel);  /* small text (5.1:1 on linen) */
+  --rule: color-mix(in srgb, var(--espresso) 18%, transparent);
+  --whisper: color-mix(in srgb, var(--espresso) 80%, var(--linen)); /* 5.4:1 */
 
   /* type */
-  --display: "Cormorant Garamond", Georgia, serif;
-  --body: "DM Sans", system-ui, sans-serif;
-  --hand: "Caveat", cursive;
+  --display: "Cormorant Garamond Variable", "Cormorant Garamond", Georgia, serif;
+  --body: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
+  --hand: "Caveat Variable", "Caveat", cursive;
 
   /* the baker's margin */
-  --rail: 112px;
+  --rail: 104px;
   --gutter: clamp(20px, 5vw, 88px);
+
+  /* ---- patterns, taken from the cookie backing cards ---- */
+  --stripe-b: color-mix(in srgb, var(--honey) 46%, var(--linen));
+  --pat-stripes: repeating-linear-gradient(90deg, var(--linen) 0 26px, var(--stripe-b) 26px 52px);
+  --pat-checker: repeating-conic-gradient(var(--espresso) 0 25%, var(--ginger) 0 50%) 0 0 / 68px 68px;
+  --pat-dots:
+    radial-gradient(circle, var(--linen) 0 9px, transparent 9.6px) 0 0 / 44px 44px,
+    radial-gradient(circle, var(--linen) 0 9px, transparent 9.6px) 22px 22px / 44px 44px,
+    var(--crust);
+  --spark-sage: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Cg fill='%2375855c'%3E%3Cpath id='s' d='M30 12c2 12 6 16 18 18-12 2-16 6-18 18-2-12-6-16-18-18 12-2 16-6 18-18z'/%3E%3Cuse href='%23s' transform='translate(118 40) scale(.55)'/%3E%3Cuse href='%23s' transform='translate(150 118) scale(.9)'/%3E%3Cuse href='%23s' transform='translate(40 128) scale(.5)'/%3E%3Cuse href='%23s' transform='translate(96 168) scale(.7)'/%3E%3C/g%3E%3C/svg%3E");
+  --pat-sparks: var(--spark-sage) 0 0 / 300px 300px, var(--sage-mist);
 }
 
 [data-family="savory"] {
   --surface: var(--sage-mist);
   --ink: var(--deep-olive);
   --accent: var(--sage-leaf);
-  --rule: color-mix(in srgb, var(--deep-olive) 16%, transparent);
-  --whisper: color-mix(in srgb, var(--deep-olive) 55%, transparent);
+  --accent-text: var(--deep-olive);
+  --rule: color-mix(in srgb, var(--deep-olive) 22%, transparent);
+  --whisper: color-mix(in srgb, var(--deep-olive) 92%, var(--sage-mist)); /* 5.3:1 */
 }

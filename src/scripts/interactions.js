@@ -46,17 +46,20 @@
   var railRead = document.getElementById('railRead');
   var railSec = document.getElementById('railSec');
   if (!rail || !railRead || !railSec) return;
+  var home = !!document.getElementById('hero');
 
   var reads = [
     ['hero', 'Nenas Bakehouse', 'Las Vegas, NV'],
-    ['thesis', 'Less sugar, more flavor', 'Freshly Baked'],
-    ['cakes', 'Wholesome ingredients', 'Cakes, pastries and breads'],
-    ['savory', 'Ferment <b>72h</b> at <b>76&deg;F</b>', 'Friday &amp; Saturday bake'],
-    ['everyday', 'Dough rested <b>36h</b>', 'Bake and pack'],
+    ['thesis', 'Less sugar, more flavor', 'Freshly baked'],
+    ['cakes', 'Custom cakes', 'Made to order'],
+    ['savory', 'Slow fermented', 'Sourdough &amp; focaccia'],
+    ['everyday', 'Small treats', 'By pre-order'],
+    ['about', 'Baked like family', 'Real ingredients'],
     ['order', 'Lead time <b>72h</b> minimum', 'Tiered cakes · 2 weeks'],
   ];
+
   var secs = reads.map(function (r) { return document.getElementById(r[0]); });
-  var navLinks = document.querySelectorAll('header a[data-nav]');
+  var navLinks = document.querySelectorAll('header nav a');
   var body = document.body;
   var lastY = window.scrollY;
 
@@ -69,11 +72,9 @@
     else if (delta < -4 || y < 240) body.classList.remove('nav-hide');
     lastY = y;
 
-    var zone = reads[idx][0] === 'savory' ? 'savory' : 'sweet';
+    var zone = home && reads[idx][0] === 'savory' ? 'savory' : (document.querySelector('main[data-family="savory"]') ? 'savory' : 'sweet');
     if (body.dataset.zone !== zone) body.dataset.zone = zone;
 
-    var here = reads[idx][0];
-    navLinks.forEach(function (a) { a.classList.toggle('on', a.dataset.nav === here); });
   }
 
   function currentIdx() {
@@ -85,7 +86,7 @@
   function updateRail() {
     var idx = currentIdx();
     updateNav(idx);
-    if (railRead.dataset.i === String(idx)) return;
+    if (!home || railRead.dataset.i === String(idx)) return;
     railRead.dataset.i = String(idx);
     [railRead, railSec].forEach(function (el) { el.style.opacity = '0'; });
     setTimeout(function () {

@@ -1,15 +1,20 @@
 ---
 import { nav } from '../data/site.js';
 import Wordmark from './Wordmark.astro';
+const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 <header>
-  <a href="#main" class="brand" aria-label="Nenas Bakehouse — home">
+  <a href="/" class="brand" aria-label="Nenas Bakehouse, home">
     <Wordmark class="brand__mark" />
   </a>
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     {nav.map((item) => (
-      <a href={item.href} data-nav={item.key}>{item.label}</a>
+      <a
+        href={item.href}
+        class={item.only ? `nav--${item.only}` : undefined}
+        aria-current={item.href === here ? 'page' : undefined}
+      >{item.label}</a>
     ))}
-    <a href="/inquire" class="nav-inquire">Inquire</a>
+    <a href="/inquire" class="nav-order" aria-current={here === '/inquire' ? 'page' : undefined}>Order</a>
   </nav>
 </header>

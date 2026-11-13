@@ -4,14 +4,15 @@ import Rail from '../components/Rail.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Frame from '../components/Frame.astro';
-import { cakes } from '../data/cakes.js';
-import { breads } from '../data/breads.js';
-import { everyday } from '../data/everyday.js';
+import OrderSteps from '../components/OrderSteps.astro';
+import Portrait from '../components/Portrait.astro';
+import { categories, bySlug } from '../data/menu.js';
 import { site } from '../data/site.js';
 
+const cakes = bySlug('custom-cakes');
+const bread = bySlug('sourdough-focaccia');
+const treats = ['cookies', 'cinnamon-rolls', 'loaf-cakes'].map(bySlug);
 const revealDelay = (i: number) => (i > 0 ? `rv-d${Math.min(i, 3)}` : '');
-const cropLabel = (ratio: string) =>
-  ratio === '1/1' ? '1:1 · 1400×1400' : '4:5 · 1400×1750';
 ---
 <Base>
   <Rail />
@@ -24,27 +25,32 @@ const cropLabel = (ratio: string) =>
         <div class="hero__type">
           <div class="hero__eyebrow rv">
             <span class="line"></span>
-            <span class="util">Cottage bakehouse · Las&nbsp;Vegas</span>
+            <span class="util">Home bakery · Las&nbsp;Vegas, NV</span>
           </div>
           <h1>
             <span class="line-mask"><span>Less sweet,</span></span>
             <span class="line-mask"><span>still a <em class="lift">treat</em>.</span></span>
           </h1>
           <p class="hero__sub rv rv-d2">
-            Cakes and bread made the long way — browned butter, cultured starter,
-            real fruit — and pulled back on sugar until the flavour underneath
-            finally has room to speak.
+            Custom cakes, slow-fermented sourdough, cookies and cinnamon rolls,
+            made with real ingredients and less sugar so you can taste
+            what's underneath.
           </p>
-          <div class="hero__meta rv rv-d3">
-            <div><strong>5</strong><span class="util">Cake flavours</span></div>
-            <div><strong>72h</strong><span class="util">Lead time</span></div>
-            <div><strong>SNHD</strong><span class="util">Permitted</span></div>
+          <div class="hero__actions rv rv-d2">
+            <a class="btn" href="/inquire">Start a pre-order <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="cta" href="#menu">See the menu</a>
           </div>
+          <ul class="hero__meta rv rv-d3">
+            <li><strong>Pre-order</strong><span class="util">Baked for your date</span></li>
+            <li><strong>Las Vegas</strong><span class="util">Pickup or delivery</span></li>
+            <li><strong>SNHD</strong><span class="util">Permitted</span></li>
+          </ul>
         </div>
 
         <figure class="hero__plate rv rv-d2">
-          <Frame crop="Hero · 4:5 · 1600×2000" speed={0.045} alt="Nenas Bakehouse cake" />
-          <figcaption class="hero__cap">cut it thin,<br />eat it twice</figcaption>
+          <Frame photo="hero" alt="A Nenas Bakehouse cake" pattern="dots" label="Made with real ingredients" ratio="4/5" eager
+            speed={0.045} sizes="(max-width: 1020px) 90vw, 40vw" />
+          <figcaption class="hero__cap">cut it thin,<br />eat it twice <span aria-hidden="true">✦</span></figcaption>
         </figure>
       </div>
     </section>
@@ -52,19 +58,17 @@ const cropLabel = (ratio: string) =>
     <!-- ============ THESIS ============ -->
     <section class="thesis" id="thesis">
       <div class="grid">
-        <div class="thesis__label rv"><span class="util">The&nbsp;whole&nbsp;idea</span></div>
+        <div class="thesis__label rv"><h2 class="util">The&nbsp;whole&nbsp;idea</h2></div>
         <div class="thesis__body">
           <p class="rv">
-            Most bakeries run sugar at parity with flour. We hold it at{' '}
-            <em>seventy-five percent</em> — the floor where crumb still sets but
-            the butter, the cultured tang and the fruit stop competing with
-            sweetness.
+            Many recipes use as much sugar as flour. I hold it at about{' '}
+            <em>seventy-five percent</em>, so the butter, the fruit and the
+            chocolate stop competing with sweetness.
           </p>
           <p class="thesis__note rv rv-d2">
-            Below that, structure fails: the crumb goes gummy and the loaf
-            collapses on cooling. So this isn't a health claim and it isn't a
-            sugar-free cake. It's a measured decision, made once, and held across
-            every recipe in the book.
+            Go lower and the texture suffers. So this isn't a health claim and
+            it isn't a sugar-free cake. It's one measured decision, held across
+            everything I bake.
           </p>
         </div>
       </div>
@@ -72,87 +76,89 @@ const cropLabel = (ratio: string) =>
 
     <!-- ============ CAKES ============ -->
     <section class="cakes" id="cakes">
+      <span class="anchor" id="menu"></span>
       <div class="sec-head rv">
-        <h2>Cakes &amp; layer cakes</h2>
-        <span class="util">Five, made properly</span>
+        <h2>Custom cakes</h2>
+        <a class="util sec-link" href="/custom-cakes">All about cakes <span aria-hidden="true">→</span></a>
       </div>
+      <p class="sec-intro rv">{cakes.intro}</p>
 
-      {cakes.map((cake) => (
+      {cakes.items.map((cake, i) => (
         <article class="cake rv">
-          <div class="cake__idx"><span class="fig">{cake.idx}</span></div>
+          <div class="cake__idx"><span class="fig" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span></div>
           <div class="cake__body">
             <h3>{cake.name}</h3>
             <p class="cake__desc">{cake.desc}</p>
-            <div class="cake__spec">
-              <span><span class="util">Serves</span><b>{cake.serves}</b></span>
-              <span><span class="util">Lead time</span><b>{cake.lead}</b></span>
-              <span><span class="util">From</span><b>{cake.from}</b></span>
-            </div>
-            <p class="allerg"><b>Contains</b> {cake.contains}</p>
           </div>
           <figure class="cake__img">
-            <Frame src={cake.image} alt={cake.name} crop="3:4 · 1200×1600" />
+            <Frame photo={cake.photo} alt={`${cake.name} by Nenas Bakehouse`} label={cake.name}
+              pattern={(['stripes', 'dots', 'checker'] as const)[i % 3]} ratio="4/3" />
           </figure>
         </article>
       ))}
+      <a class="btn rv" href="/inquire">{cakes.cta} <span class="arrow" aria-hidden="true">→</span></a>
     </section>
 
     <!-- ============ SAVORY — palette flips via data-family ============ -->
     <section class="savory" id="savory" data-family="savory">
       <div class="sec-head rv">
-        <h2>Bread &amp; focaccia</h2>
-        <span class="util">Baked to the week, not to order</span>
+        <h2>Sourdough &amp; focaccia</h2>
+        <a class="util sec-link" href="/sourdough-focaccia">Bread details <span aria-hidden="true">→</span></a>
       </div>
       <div class="loaf">
         <div class="loaf__lede">
-          <p class="lede rv">
-            Slow ferment, blistered crust, and an open crumb that took three days
-            to earn.
-          </p>
-          <p class="loaf__note rv rv-d2">
-            Bread runs on a schedule because starter does. Reserve by Wednesday
-            for the weekend bake — quantities are fixed by oven space, not by
-            demand.
-          </p>
+          <p class="lede rv">Slow fermented, and baked fresh for your pre-order.</p>
+          <p class="loaf__note rv rv-d2">{bread.priceNote}. Send your date and I'll confirm what I can bake for it.</p>
+          <a class="btn rv rv-d2" href="/inquire">{bread.cta} <span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <div class="loaf__list">
-          {breads.map((bread, i) => (
-            <div class={`row rv ${revealDelay(Math.floor(i / 2))}`}>
-              <span class="row__name">{bread.name}</span>
-              <span class="row__day">{bread.day}</span>
-            </div>
+        <ul class="loaf__list">
+          {bread.items.map((item, i) => (
+            <li class={`row rv ${revealDelay(Math.floor(i / 2))}`}>
+              <span class="row__name">{item.name}</span>
+              <span class="row__day">Pre-order</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
 
-    <!-- ============ EVERYDAY & INDIVIDUAL ============ -->
+    <!-- ============ EVERYDAY ============ -->
     <section class="everyday" id="everyday">
       <div class="sec-head rv">
-        <h2>Everyday &amp; individual</h2>
-        <span class="util">Small format · bake and pack</span>
+        <h2>Cookies, rolls &amp; loaf cake</h2>
+        <span class="util">Small treats, by pre-order</span>
       </div>
 
       <div class="case">
-        {everyday.map((item, i) => (
+        {treats.map((cat, i) => (
           <article class={`case__item rv ${revealDelay(i)}`}>
-            <Frame src={item.image ?? null} alt={item.name} crop={cropLabel(item.ratio)} />
-            <h3>{item.name}</h3>
-            <p class="case__desc">{item.desc}</p>
+            <a href={`/${cat.slug}`} class="case__link" aria-label={cat.name}>
+              <Frame photo={cat.photo} alt={`${cat.name} by Nenas Bakehouse`} label={cat.name}
+                pattern={cat.pattern} ratio="1/1" />
+            </a>
+            <h3><a href={`/${cat.slug}`}>{cat.name}</a></h3>
             <ul class="case__list">
-              {item.list.map((entry) => (
-                <li>{entry.name} <span>{entry.note}</span></li>
-              ))}
+              {cat.items.map((item) => <li>{item.name}</li>)}
             </ul>
-            <div class="case__foot">
-              <span class="util">{item.footLabel}</span><b>{item.footValue}</b>
-              <p class="allerg">
-                <b>Contains</b> {item.contains}
-                {item.mayContain && <><br />May contain {item.mayContain}</>}
-              </p>
-            </div>
+            {cat.priceNote && <p class="case__price">{cat.priceNote}</p>}
           </article>
         ))}
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about-teaser" id="about">
+      <div class="about-teaser__inner rv">
+        <Portrait class="about-teaser__mark" decorative />
+        <div>
+          <h2>Nena is me.</h2>
+          <p>
+            It's been my nickname since I was a baby. I bake for you the way I
+            bake for my own family, and I won't sell anything I wouldn't serve
+            them.
+          </p>
+          <a class="cta" href="/about">Read my story <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
@@ -160,36 +166,15 @@ const cropLabel = (ratio: string) =>
     <section class="order" id="order">
       <div class="grid">
         <div class="order__head">
-          <span class="util rv">How it works</span>
-          <h2 class="rv" style="margin-top:20px">Tell me the date, I'll tell you what's possible.</h2>
-          <a class="cta rv rv-d2" href="/inquire">Start an inquiry <span class="arrow">→</span></a>
+          <p class="util rv">How ordering works</p>
+          <h2 class="rv">Tell me the date, I'll tell you what's possible.</h2>
+          <a class="btn rv rv-d2" href="/inquire">Start a pre-order <span class="arrow" aria-hidden="true">→</span></a>
           <p class="lead-note rv rv-d2">
-            Custom cakes need {site.leadTimes.custom}. Tiered cakes, {site.leadTimes.tiered}.
+            Custom cakes need {site.leadTimes.custom}. Tiered cakes, {site.leadTimes.tiered}.{' '}
+            <a href="/faq">More questions answered</a>.
           </p>
         </div>
-        <div class="order__steps">
-          <div class="step rv">
-            <span class="fig">01</span>
-            <div>
-              <h4>Send the details</h4>
-              <p>Date, headcount, flavour, and every allergy at the table. The allergy field is the one I read first.</p>
-            </div>
-          </div>
-          <div class="step rv rv-d1">
-            <span class="fig">02</span>
-            <div>
-              <h4>We confirm together</h4>
-              <p>You'll get a written quote with the exact size, price and pickup window. Nothing is booked until you say yes.</p>
-            </div>
-          </div>
-          <div class="step rv rv-d2">
-            <span class="fig">03</span>
-            <div>
-              <h4>Pickup or local delivery</h4>
-              <p>Pickup from the bakehouse, or delivery inside the {site.serviceArea} for a flat fee. Cakes travel flat and cold.</p>
-            </div>
-          </div>
-        </div>
+        <OrderSteps />
       </div>
     </section>
   </main>
