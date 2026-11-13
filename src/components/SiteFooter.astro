@@ -1,46 +1,40 @@
 ---
 import Logo from './Logo.astro';
 import { site, compliance } from '../data/site.js';
+import { categories } from '../data/menu.js';
 ---
 <footer>
+  <div class="scallop" aria-hidden="true"></div>
   <div class="grid">
     <div class="f-brand">
       <Logo class="f-logo" title="Nenas Bakehouse" />
-      <p class="f-tag">{site.tagline}</p>
+      <p class="f-tag">{site.tagline} <span aria-hidden="true">✦</span></p>
     </div>
+    <nav class="f-col" aria-label="Menu">
+      <h2>Menu</h2>
+      {categories.map((c) => <a href={`/${c.slug}`}>{c.name}</a>)}
+    </nav>
+    <nav class="f-col" aria-label="Ordering">
+      <h2>Ordering</h2>
+      <a href="/inquire">Start a pre-order</a>
+      <a href="/faq#lead-time">Lead times</a>
+      <a href="/faq#pickup">Pickup</a>
+      <a href="/faq#payment">Payment &amp; deposits</a>
+      <a href="/faq#cancellations">Cancellations</a>
+      <a href="/faq#allergens">Allergens</a>
+    </nav>
+    <nav class="f-col" aria-label="About">
+      <h2>About</h2>
+      <a href="/about">Meet Nena</a>
+      <a href="/faq">Questions</a>
+    </nav>
     <div class="f-col">
-      <h5>Menu</h5>
-      <a href="/#cakes">Cakes</a>
-      <a href="/#savory">Bread &amp; focaccia</a>
-      <a href="/#everyday">Cookies</a>
-      <a href="/#everyday">Cinnamon rolls</a>
-      <a href="/#everyday">Loaf cakes</a>
-      <a href="/#everyday">Individual cakes</a>
-    </div>
-    <div class="f-col">
-      <h5>Ordering</h5>
-      <a href="/inquire">Start an inquiry</a>
-      <a href="/#order">Lead times</a>
-      <a href="/#order">Pickup &amp; delivery</a>
-      <a href="/inquire">Cancellations</a>
-    </div>
-    <div class="f-col">
-      <h5>Allergens</h5>
-      <a href="/#cakes">Full declarations</a>
-      <a href="/inquire">Ask a question</a>
-    </div>
-    <div class="f-col">
-      <h5>Reach me</h5>
+      <h2>Reach me</h2>
       <a href={`mailto:${site.email}`}>{site.email}</a>
       <a href={site.instagram.url} target="_blank" rel="noopener">Instagram {site.instagram.handle}</a>
     </div>
     <div class="disclosure">
-      <p>
-        <strong>Cottage food disclosure —</strong> {compliance.disclosure}
-        {compliance.disclosureIsPlaceholder && (
-          <em> Placeholder wording — replace with the exact SNHD-approved sentence before launch.</em>
-        )}
-      </p>
+      <p><strong>Cottage food disclosure:</strong> {compliance.disclosure}</p>
       <p>{compliance.copyright}</p>
     </div>
   </div>

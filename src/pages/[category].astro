@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHead from '../components/PageHead.astro';
+import Frame from '../components/Frame.astro';
+import { categories } from '../data/menu.js';
+import { site, compliance } from '../data/site.js';
+
+export function getStaticPaths() {
+  return categories.map((cat) => ({ params: { category: cat.slug }, props: { cat } }));
+}
+const { cat } = Astro.props;
+const url = `${site.url}/${cat.slug}`;
+const others = categories.filter((c) => c.slug !== cat.slug);
+const patterns = cat.family === 'savory'
+  ? (['sparks', 'sparks', 'sparks'] as const)
+  : (['dots', 'stripes', 'checker'] as const);
+
+const schema = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url },
+      { '@type': 'ListItem', position: 2, name: cat.name, item: url },
+    ],
+  },
+  {
+    '@type': 'ItemList',
+    name: `${cat.name} from ${site.name}`,
+    itemListElement: cat.items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: item.name,
+        description: item.desc,
+        category: cat.name,
+        brand: { '@type': 'Brand', name: site.name },
+        ...(item.offer
+          ? { offers: { '@type': 'Offer', price: item.offer.toFixed(2), priceCurrency: 'USD', availability: 'https://schema.org/PreOrder', url, seller: { '@id': `${site.url}/#bakery` } } }
+          : {}),
+      },
+    })),
+  },
+];
+---
+<Base title={cat.seoTitle} description={cat.seoDescription} schema={schema}>
+  <Rail />
+  <SiteHeader />
+
+  <main id="main" data-family={cat.family === 'savory' ? 'savory' : undefined}>
+    <PageHead eyebrow={cat.tagline} title={cat.name} lede={cat.intro} pattern={cat.pattern} family={cat.family}>
+      <div class="pagehead__actions">
+        <a class="btn" href="/inquire">{cat.cta} <span class="arrow" aria-hidden="true">→</span></a>
+        {cat.priceNote && <span class="pill">{cat.priceNote}</span>}
+      </div>
+    </PageHead>
+
+    <section class="products">
+      {cat.items.map((item, i) => (
+        <article class="product rv">
+          <figure class="product__img">
+            <Frame photo={item.photo} alt={`${item.name} by Nenas Bakehouse`} label={item.name}
+              pattern={patterns[i % 3]} ratio="4/5" eager={i === 0}
+              sizes="(max-width: 760px) 90vw, 36vw" />
+          </figure>
+          <div class="product__body">
+            <h2>{item.name}</h2>
+            <p class="product__desc">{item.desc}</p>
+            {(item.price || cat.slug === 'custom-cakes') && (
+              <p class="product__price">{item.price ?? 'Priced by size and design'}</p>
+            )}
+
+            <div class="label">
+              <h3>From the label</h3>
+              {item.ingredients ? (
+                <dl>
+                  <dt>Ingredients</dt><dd>{item.ingredients}</dd>
+                  {item.contains && <><dt>Contains</dt><dd>{item.contains}</dd></>}
+                  {item.mayContain && <><dt>May contain</dt><dd>{item.mayContain}</dd></>}
+                  {item.netWt && <><dt>Net weight</dt><dd>{item.netWt}</dd></>}
+                </dl>
+              ) : (
+                <p>
+                  The full ingredient list is printed on the label of every order.
+                  My kitchen handles {site.kitchenAllergens}. Have an allergy?{' '}
+                  <a href="/inquire">Ask me before you order</a>.
+                </p>
+              )}
+            </div>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="pagefoot">
+      <div class="pagefoot__order">
+        <h2>Ready when you are.</h2>
+        <p>Everything is made by pre-order. Send your date and I'll reply with what's possible. Nothing is charged until you confirm.</p>
+        <a class="btn" href="/inquire">{cat.cta} <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <nav class="pagefoot__more" aria-label="More from the menu">
+        <h2 class="util">More from the menu</h2>
+        <ul>
+          {others.map((c) => <li><a href={`/${c.slug}`}>{c.name} <span aria-hidden="true">→</span></a></li>)}
+        </ul>
+      </nav>
+      <p class="pagefoot__legal">{compliance.disclosure}</p>
+    </section>
+  </main>
+
+  <SiteFooter />
+</Base>

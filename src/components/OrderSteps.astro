@@ -1,0 +1,28 @@
+---
+import { site } from '../data/site.js';
+// `level` keeps the heading order valid: h3 under a section h2, h2 under a page h1.
+const { level: H = 'h3' } = Astro.props;
+---
+<ol class="order__steps">
+  <li class="step rv">
+    <span class="fig" aria-hidden="true">01</span>
+    <div>
+      <H>Send the details</H>
+      <p>Date, headcount, flavor, and every allergy at the table. The allergy field is the one I read first.</p>
+    </div>
+  </li>
+  <li class="step rv rv-d1">
+    <span class="fig" aria-hidden="true">02</span>
+    <div>
+      <H>We confirm together</H>
+      <p>You'll get a written quote with the exact size, price and pickup window. Nothing is booked until you say yes. Custom cakes are held with a 20% deposit.</p>
+    </div>
+  </li>
+  <li class="step rv rv-d2">
+    <span class="fig" aria-hidden="true">03</span>
+    <div>
+      <H>Pick up in northwest Las Vegas</H>
+      <p>Pickup is in {site.pickupArea}. I send the address and your pickup window when your order is confirmed.</p>
+    </div>
+  </li>
+</ol>

@@ -1,9 +1,10 @@
 ---
 import Portrait from './Portrait.astro';
 ---
+<!-- Decorative: hidden from assistive tech and taken out of the tab order. -->
 <div class="rail" id="rail" aria-hidden="true">
-  <a class="rail__mark" href="#main" aria-label="Nenas Bakehouse">
-    <Portrait class="rail__portrait" title="Nenas Bakehouse" />
+  <a class="rail__mark" href="/" tabindex="-1">
+    <Portrait class="rail__portrait" decorative />
   </a>
   <div class="rail__tick"></div>
   <div class="rail__read" id="railRead">Nenas Bakehouse</div>

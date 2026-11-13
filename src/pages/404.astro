@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Rail from '../components/Rail.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<Base title="Page not found | Nenas Bakehouse" description="That page isn't here." noindex>
+  <Rail />
+  <SiteHeader />
+  <main id="main" class="ty">
+    <div class="ty__inner">
+      <p class="util">Page not found</p>
+      <h1>That one's not on the menu.</h1>
+      <p>The page you were looking for has moved or never existed.</p>
+      <a class="btn" href="/">Back to the bakehouse <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </main>
+  <SiteFooter />
+</Base>

@@ -1,18 +1,52 @@
 ---
-// A photo frame that renders a real <img> when `src` is set, otherwise a
-// labelled placeholder at the given crop.
+// A photo frame. `photo` is a file name (no extension) in src/assets/photos/.
+// When the file exists it is resized and served as WebP at several widths.
+// When it does not, a brand-pattern panel carrying `label` shows instead, so
+// the page never looks unfinished.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
-  src?: string | null;
+  photo?: string | null;
   alt?: string;
-  crop: string;
+  label?: string;
+  pattern?: 'dots' | 'stripes' | 'checker' | 'sparks';
+  ratio?: string;
+  sizes?: string;
+  eager?: boolean;
   speed?: number | null;
   class?: string;
 }
-const { src = null, alt = '', crop, speed = null, class: cls = '' } = Astro.props;
-const classes = ['ph', src ? 'has-img' : '', speed != null ? 'parallax' : '', cls]
-  .filter(Boolean)
-  .join(' ');
+const {
+  photo = null, alt = '', label = '', pattern = 'dots', ratio = '4/5',
+  sizes = '(max-width: 640px) 90vw, (max-width: 1020px) 45vw, 30vw',
+  eager = false, speed = null, class: cls = '',
+} = Astro.props;
+
+const files = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/photos/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG}',
+  { eager: true },
+);
+const match = photo
+  ? Object.entries(files).find(([p]) => p.split('/').pop()!.replace(/\.[^.]+$/, '') === photo)
+  : undefined;
+const src = match?.[1].default;
+
+const classes = ['ph', src ? 'has-img' : `ph--${pattern}`, speed != null ? 'parallax' : '', cls]
+  .filter(Boolean).join(' ');
 ---
-<div class={classes} data-crop={crop} data-speed={speed ?? undefined}>
-  {src && <img src={src} alt={alt} loading="lazy" decoding="async" />}
+<div class={classes} style={`aspect-ratio:${ratio}`} data-speed={speed ?? undefined}>
+  {src ? (
+    <Image
+      src={src}
+      alt={alt}
+      widths={[400, 700, 1000, 1400]}
+      sizes={sizes}
+      quality={78}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+    />
+  ) : (
+    label && <span class="ph__label" aria-hidden="true">{label}</span>
+  )}
 </div>

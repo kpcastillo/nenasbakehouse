@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://nenasbakehouse.com',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/thank-you') })],
   build: {
     // Emit `/thank-you/index.html` so the Netlify Forms redirect resolves cleanly.
     format: 'directory',

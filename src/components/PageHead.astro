@@ -1,0 +1,19 @@
+---
+// The patterned band at the top of every inner page.
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  pattern?: 'dots' | 'stripes' | 'checker' | 'sparks';
+  family?: string;
+}
+const { eyebrow, title, lede, pattern = 'dots', family = 'sweet' } = Astro.props;
+---
+<section class={`pagehead pagehead--${pattern}`} data-family={family === 'savory' ? 'savory' : undefined}>
+  <div class="pagehead__inner">
+    <p class="util">{eyebrow}</p>
+    <h1>{title}</h1>
+    {lede && <p class="pagehead__lede">{lede}</p>}
+    <slot />
+  </div>
+</section>

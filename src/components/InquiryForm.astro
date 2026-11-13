@@ -1,14 +1,14 @@
 ---
 import { site } from '../data/site.js';
+import { categories } from '../data/menu.js';
 ---
 <div class="inquiry" id="inquiry">
   <div class="inquiry__grid">
     <div class="inquiry__intro rv">
-      <span class="util">Order inquiry</span>
+      <h2 class="util">Order inquiry</h2>
       <p>Tell me what you're thinking. I'll reply with what's possible for your date, the exact size, and a price.</p>
       <p class="fineprint">
-        This is an inquiry, not a booking — nothing is charged here. Custom cakes
-        need {site.leadTimes.custom}; tiered cakes, {site.leadTimes.tiered}. I read
+        Everything is made by pre-order. This is an inquiry, not a booking, and nothing is charged here. {site.leadNote} I read
         every message myself and usually reply within two days.
       </p>
     </div>
@@ -22,17 +22,17 @@ import { site } from '../data/site.js';
       netlify-honeypot="bot-field"
     >
       <input type="hidden" name="form-name" value="inquiry" />
-      <p class="hp">
+      <p class="hp" aria-hidden="true">
         <label>Leave this field empty if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
       </p>
 
       <div class="field field--pair">
         <div>
-          <label for="name">Your name <span class="req">*</span></label>
+          <label for="name">Your name <span class="req" aria-hidden="true">*</span></label>
           <input id="name" name="name" type="text" required autocomplete="name" />
         </div>
         <div>
-          <label for="email">Email <span class="req">*</span></label>
+          <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
           <input id="email" name="email" type="email" required autocomplete="email" />
         </div>
       </div>
@@ -43,35 +43,32 @@ import { site } from '../data/site.js';
           <input id="phone" name="phone" type="tel" autocomplete="tel" />
         </div>
         <div>
-          <label for="event-date">Date you need it <span class="req">*</span></label>
+          <label for="event-date">Date you need it <span class="req" aria-hidden="true">*</span></label>
           <input id="event-date" name="event-date" type="date" required />
         </div>
       </div>
 
       <div class="field field--pair">
         <div>
-          <label for="type">What are you after? <span class="req">*</span></label>
+          <label for="type">What are you after? <span class="req" aria-hidden="true">*</span></label>
           <select id="type" name="type" required>
             <option value="" selected disabled>Choose one…</option>
-            <option>Layer cake</option>
+            <option>Custom cake</option>
             <option>Tiered cake</option>
-            <option>Individual / mini cakes</option>
-            <option>Cookies</option>
-            <option>Cinnamon rolls</option>
-            <option>Loaf cake</option>
-            <option>Bread &amp; focaccia</option>
+            {categories.filter((c) => c.slug !== 'custom-cakes').map((c) => <option>{c.name}</option>)}
+            <option>A mix of things</option>
             <option>Not sure yet</option>
           </select>
         </div>
         <div>
-          <label for="servings">How many people?</label>
-          <input id="servings" name="servings" type="text" placeholder="e.g. 20" />
+          <label for="servings">How many people, or how many items?</label>
+          <input id="servings" name="servings" type="text" inputmode="numeric" placeholder="e.g. 20" />
         </div>
       </div>
 
       <div class="field">
-        <label for="flavour">Flavour you're leaning toward</label>
-        <input id="flavour" name="flavour" type="text" placeholder="Browsed the menu? Name one — or describe the vibe." />
+        <label for="flavor">Flavor you're leaning toward</label>
+        <input id="flavor" name="flavor" type="text" placeholder="Browsed the menu? Name one — or describe the vibe." />
       </div>
 
       <fieldset class="fieldset">
@@ -84,7 +81,7 @@ import { site } from '../data/site.js';
       </fieldset>
 
       <div class="field field--allergy">
-        <label for="allergies">Allergies &amp; dietary needs <span class="req">*</span></label>
+        <label for="allergies">Allergies &amp; dietary needs <span class="req" aria-hidden="true">*</span></label>
         <textarea
           id="allergies"
           name="allergies"
@@ -92,25 +89,19 @@ import { site } from '../data/site.js';
           placeholder="List every allergy at the table, or write “none”. This is the field I read first."
         ></textarea>
         <p class="field__hint">
-          The kitchen handles wheat, eggs, dairy, tree nuts, and soy. I can't
+          My kitchen handles {site.kitchenAllergens}. I can't
           guarantee an allergen-free environment, but tell me and we'll talk through it.
         </p>
       </div>
 
-      <fieldset class="fieldset">
-        <legend>Pickup or delivery?</legend>
-        <div class="radio-row">
-          <label><input type="radio" name="fulfilment" value="Pickup" checked /> Pickup from the bakehouse</label>
-          <label><input type="radio" name="fulfilment" value="Local delivery" /> Local delivery ({site.serviceArea})</label>
-        </div>
-      </fieldset>
+      <p class="field__hint field__hint--note">Pickup only for now, in {site.pickupArea}. I don't offer delivery yet.</p>
 
       <div class="field">
         <label for="details">Anything else</label>
-        <textarea id="details" name="details" placeholder="Occasion, colours, inspiration, dietary context — whatever helps."></textarea>
+        <textarea id="details" name="details" placeholder="Occasion, colors, inspiration, dietary context — whatever helps."></textarea>
       </div>
 
-      <button class="submit" type="submit">Send inquiry <span class="arrow">→</span></button>
+      <button class="btn submit" type="submit">Send inquiry <span class="arrow" aria-hidden="true">→</span></button>
       <p class="form-foot">
         By sending this you agree I can email you back about your order. I won't add
         you to any list or share your details.
