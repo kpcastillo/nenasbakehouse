@@ -55,7 +55,7 @@
     ['savory', 'Slow fermented', 'Sourdough &amp; focaccia'],
     ['everyday', 'Small treats', 'By pre-order'],
     ['about', 'Baked like family', 'Real ingredients'],
-    ['order', 'Lead time <b>72h</b> minimum', 'Tiered cakes · 2 weeks'],
+    ['order', 'Pre-order only', 'Northwest Las Vegas'],
   ];
 
   var secs = reads.map(function (r) { return document.getElementById(r[0]); });

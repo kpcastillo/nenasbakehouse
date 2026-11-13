@@ -16,7 +16,7 @@ export const faqs = [
   {
     id: 'lead-time',
     q: 'How far ahead should I order?',
-    a: `Custom cakes need ${site.leadTimes.custom}. Tiered cakes need ${site.leadTimes.tiered}. Bread, cookies, cinnamon rolls and loaf cakes are sold in pre-order drops.`,
+    a: 'For custom cakes, ask as early as you can: dates fill up, and I confirm whether yours is open when I reply. Bread, cookies, cinnamon rolls and loaf cakes are sold in pre-order drops.',
   },
   {
     id: 'drops',
@@ -41,12 +41,12 @@ export const faqs = [
   {
     id: 'payment',
     q: 'How do I pay? Is there a deposit?',
-    a: 'I take Apple Pay, Zelle and cash. Custom cakes require a 20% deposit to hold your date, and the deposit goes toward your total.',
+    a: 'I take Apple Pay, Zelle and cash. Custom cakes require a 20% deposit to hold your date. The deposit goes toward your total, and the balance is due at pickup.',
   },
   {
     id: 'cancellations',
     q: 'What if I need to cancel a custom cake?',
-    a: 'If you cancel at least two weeks before your pickup date, your deposit is refunded. Inside two weeks of pickup, the deposit is not refundable.',
+    a: 'If you cancel at least two weeks before your pickup date, your deposit is refunded, or you can move it to a new date. Inside two weeks of pickup, the deposit is not refundable.',
   },
   {
     id: 'dietary',

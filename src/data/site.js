@@ -15,10 +15,8 @@ export const site = {
     handle: '@nenasbakehouse',
     url: 'https://instagram.com/nenasbakehouse',
   },
-  leadTimes: {
-    custom: '72 hours minimum',
-    tiered: 'two weeks',
-  },
+  // No fixed minimum notice is published yet: confirm the real lead times with Karen before adding numbers.
+  leadNote: 'Custom cake dates fill up, so ask as early as you can.',
   // The allergens handled in the kitchen. Per-product "Contains" lines come
   // from the SNHD labels in menu.js, never from this list.
   kitchenAllergens: 'wheat, eggs, milk, tree nuts, and soy',
