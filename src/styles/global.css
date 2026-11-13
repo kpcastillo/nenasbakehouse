@@ -290,11 +290,11 @@ section, .anchor, .faq__item { scroll-margin-top: 96px; }
 .order__head { grid-column: 1 / span 5; }
 .order__head .util { margin-bottom: 16px; }
 .order__steps { grid-column: 7 / span 6; }
-.order h1, .order h2:not(.util) { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(36px, 4.2vw, 60px); line-height: 1.05; letter-spacing: -.018em; }
+.order h1, .order__head h2 { font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(36px, 4.2vw, 60px); line-height: 1.05; letter-spacing: -.018em; }
 .step { display: grid; grid-template-columns: 52px 1fr; gap: 16px; padding: 24px 0; border-bottom: 1px solid var(--rule); }
 .step:first-child { border-top: 1px solid var(--rule); }
 .step .fig { padding-top: 4px; color: var(--accent-text); }
-.step h3 { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
+.step :is(h2, h3) { font-size: 19px; font-weight: 700; margin-bottom: 4px; }
 .step p { font-size: 17px; line-height: 1.65; color: var(--whisper); max-width: 48ch; }
 .lead-note { margin-top: 20px; font-size: 16px; line-height: 1.6; color: var(--whisper); max-width: 44ch; }
 
