@@ -20,7 +20,7 @@ export const categories = [
     photo: 'cakes',
     tagline: 'Made to order, for your date',
     intro:
-      'Every cake is made to order, so there is no price list. Tell me the date, how many people, and what you have in mind, and I will send you a written quote. These are the flavors I make most.',
+      'Every cake is made to order, so there is no price list. Tell me the date, how many people, and what you have in mind, and I will send you a written quote. I need at least two weeks\' notice. These are the flavors I make most.',
     seoTitle: 'Custom Cakes in Las Vegas | Nenas Bakehouse',
     seoDescription:
       'Less-sweet custom cakes in Las Vegas, made to order by a home-based cottage bakery. Vanilla, chocolate crunch, banana cajeta, olive oil citrus and dulce de leche. Request a quote.',

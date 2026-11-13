@@ -16,7 +16,7 @@ export const faqs = [
   {
     id: 'lead-time',
     q: 'How far ahead should I order?',
-    a: 'For custom cakes, ask as early as you can: dates fill up, and I confirm whether yours is open when I reply. Bread, cookies, cinnamon rolls and loaf cakes are sold in pre-order drops.',
+    a: 'Custom cakes need at least two weeks\' notice. Bread, cookies, cinnamon rolls and loaf cakes are sold in pre-order drops.',
   },
   {
     id: 'drops',

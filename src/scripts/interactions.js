@@ -55,7 +55,7 @@
     ['savory', 'Slow fermented', 'Sourdough &amp; focaccia'],
     ['everyday', 'Small treats', 'By pre-order'],
     ['about', 'Baked like family', 'Real ingredients'],
-    ['order', 'Pre-order only', 'Northwest Las Vegas'],
+    ['order', 'Cakes · <b>2 weeks</b> notice', 'Northwest Las Vegas'],
   ];
 
   var secs = reads.map(function (r) { return document.getElementById(r[0]); });
