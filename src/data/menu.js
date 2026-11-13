@@ -71,27 +71,32 @@ export const categories = [
       'Slow-fermented sourdough loaves and focaccia, baked fresh for your pre-order.',
     seoTitle: 'Sourdough Bread & Focaccia in Las Vegas | Nenas Bakehouse',
     seoDescription:
-      'Slow-fermented sourdough loaves and sea salt focaccia from a home-based cottage bakery in Las Vegas. Country, rosemary parmesan and seeded whole grain. Pre-order for pickup or local delivery.',
-    priceNote: 'Loaves from $12',
+      'Slow-fermented sourdough loaves and sea salt focaccia from a home-based cottage bakery in Las Vegas. Country, rosemary parmesan and seeded whole grain. Pre-order for pickup in northwest Las Vegas.',
+    priceNote: 'Loaves $12 to $14',
     cta: 'Pre-order bread',
     items: [
       {
         name: 'Country Sourdough',
         photo: 'sourdough-country',
         desc: 'The regular loaf. Slow fermented, with a crisp crust.',
-        price: 'From $12',
+        price: '$12 per loaf',
+        offer: 12,
         ...label,
       },
       {
         name: 'Rosemary Parmesan Sourdough',
         photo: 'sourdough-rosemary-parmesan',
         desc: 'Sourdough with rosemary and parmesan baked in.',
+        price: '$14 per loaf',
+        offer: 14,
         ...label,
       },
       {
         name: 'Seeded Whole Grain Sourdough',
         photo: 'sourdough-seeded',
         desc: 'A whole grain sourdough loaf with seeds.',
+        price: '$14 per loaf',
+        offer: 14,
         ...label,
       },
       {
@@ -113,7 +118,7 @@ export const categories = [
     intro: 'Three cookies, sold by the half dozen.',
     seoTitle: 'Cookies in Las Vegas | Nenas Bakehouse',
     seoDescription:
-      'Brown butter chocolate chip, double chocolate and Biscoff cookies from a home-based cottage bakery in Las Vegas. $16 per half dozen. Pre-order for pickup or local delivery.',
+      'Brown butter chocolate chip, double chocolate and Biscoff cookies from a home-based cottage bakery in Las Vegas. $16 per half dozen. Pre-order for pickup in northwest Las Vegas.',
     priceNote: '$16 per half dozen',
     cta: 'Pre-order cookies',
     items: [
@@ -154,7 +159,7 @@ export const categories = [
     intro: 'One cinnamon roll, done one way: soft, and finished with a half-sugar glaze.',
     seoTitle: 'Cinnamon Rolls in Las Vegas | Nenas Bakehouse',
     seoDescription:
-      'Cinnamon rolls with a half-sugar glaze from a home-based cottage bakery in Las Vegas. $4 each. Pre-order for pickup or local delivery.',
+      'Cinnamon rolls with a half-sugar glaze from a home-based cottage bakery in Las Vegas. $4 each. Pre-order for pickup in northwest Las Vegas.',
     priceNote: '$4 each',
     cta: 'Pre-order cinnamon rolls',
     items: [
@@ -179,7 +184,7 @@ export const categories = [
     intro: 'One loaf cake for now.',
     seoTitle: 'Brown Butter Banana Loaf Cake in Las Vegas | Nenas Bakehouse',
     seoDescription:
-      'Brown butter banana loaf cake from a home-based cottage bakery in Las Vegas. Pre-order for pickup or local delivery.',
+      'Brown butter banana loaf cake from a home-based cottage bakery in Las Vegas. Pre-order for pickup in northwest Las Vegas.',
     priceNote: null,
     cta: 'Pre-order a loaf cake',
     items: [

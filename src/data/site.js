@@ -7,9 +7,9 @@ export const site = {
   url: 'https://nenasbakehouse.com',
   title: 'Nenas Bakehouse | Less-Sweet Custom Cakes & Sourdough in Las Vegas',
   description:
-    'Nenas Bakehouse is a home-based cottage bakery in Las Vegas, NV. Custom cakes, slow-fermented sourdough, focaccia, cookies and cinnamon rolls made with real ingredients and less sugar. Pre-order for pickup or local delivery.',
+    'Nenas Bakehouse is a home-based cottage bakery in Las Vegas, NV. Custom cakes, slow-fermented sourdough, focaccia, cookies and cinnamon rolls made with real ingredients and less sugar. Pre-order for pickup in northwest Las Vegas.',
   location: 'Las Vegas, NV',
-  serviceArea: 'Las Vegas valley',
+  pickupArea: 'northwest Las Vegas (89131)',
   email: 'nenasbakehouselv@gmail.com',
   instagram: {
     handle: '@nenasbakehouse',

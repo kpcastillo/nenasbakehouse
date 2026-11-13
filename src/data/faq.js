@@ -16,7 +16,12 @@ export const faqs = [
   {
     id: 'lead-time',
     q: 'How far ahead should I order?',
-    a: `Custom cakes need ${site.leadTimes.custom}. Tiered cakes need ${site.leadTimes.tiered}. For bread, cookies and cinnamon rolls, send your date and I will confirm whether I can bake for it.`,
+    a: `Custom cakes need ${site.leadTimes.custom}. Tiered cakes need ${site.leadTimes.tiered}. Bread, cookies, cinnamon rolls and loaf cakes are sold in pre-order drops.`,
+  },
+  {
+    id: 'drops',
+    q: 'What is a pre-order drop?',
+    a: 'For now I bake bread and treats in batches called drops. You order ahead for a drop, I bake everything fresh, and you pick up. Send the inquiry form or message me on Instagram to ask about the next one.',
   },
   {
     id: 'cake-prices',
@@ -26,12 +31,22 @@ export const faqs = [
   {
     id: 'prices',
     q: 'What do cookies, cinnamon rolls and sourdough cost?',
-    a: 'Cookies are $16 per half dozen. Cinnamon rolls are $4 each. Sourdough loaves start at $12.',
+    a: 'Cookies are $16 per half dozen. Cinnamon rolls are $4 each. Country sourdough is $12 a loaf, and the flavored loaves (rosemary parmesan and seeded whole grain) are $14.',
   },
   {
-    id: 'delivery',
-    q: 'Do you deliver?',
-    a: `You can pick up your order in Las Vegas, or I can deliver within the ${site.serviceArea}. The delivery fee is included in your quote.`,
+    id: 'pickup',
+    q: 'Where do I pick up? Do you deliver?',
+    a: `Pickup is in ${site.pickupArea}. I send the address and your pickup window when your order is confirmed. I do not offer delivery yet.`,
+  },
+  {
+    id: 'payment',
+    q: 'How do I pay? Is there a deposit?',
+    a: 'I take Apple Pay, Zelle and cash. Custom cakes require a deposit to hold your date; the amount is in your quote.',
+  },
+  {
+    id: 'dietary',
+    q: 'Do you have gluten-free, dairy-free or vegan options?',
+    a: 'Nothing I bake is gluten-free. Most of my sourdough loaves and the focaccia are dairy-free and vegan. The exception is the Rosemary Parmesan loaf, which has cheese. My kitchen also handles milk and eggs, so tell me if you have an allergy.',
   },
   {
     id: 'allergens',

@@ -42,7 +42,7 @@ const revealDelay = (i: number) => (i > 0 ? `rv-d${Math.min(i, 3)}` : '');
           </div>
           <ul class="hero__meta rv rv-d3">
             <li><strong>Pre-order</strong><span class="util">Baked for your date</span></li>
-            <li><strong>Las Vegas</strong><span class="util">Pickup or delivery</span></li>
+            <li><strong>Northwest</strong><span class="util">Las Vegas pickup</span></li>
             <li><strong>SNHD</strong><span class="util">Permitted</span></li>
           </ul>
         </div>
@@ -108,14 +108,14 @@ const revealDelay = (i: number) => (i > 0 ? `rv-d${Math.min(i, 3)}` : '');
       <div class="loaf">
         <div class="loaf__lede">
           <p class="lede rv">Slow fermented, and baked fresh for your pre-order.</p>
-          <p class="loaf__note rv rv-d2">{bread.priceNote}. Send your date and I'll confirm what I can bake for it.</p>
+          <p class="loaf__note rv rv-d2">{bread.priceNote}, sold in pre-order drops.</p>
           <a class="btn rv rv-d2" href="/inquire">{bread.cta} <span class="arrow" aria-hidden="true">→</span></a>
         </div>
         <ul class="loaf__list">
           {bread.items.map((item, i) => (
             <li class={`row rv ${revealDelay(Math.floor(i / 2))}`}>
               <span class="row__name">{item.name}</span>
-              <span class="row__day">Pre-order</span>
+              <span class="row__day">{item.price?.replace(" per loaf", "") ?? "Pre-order"}</span>
             </li>
           ))}
         </ul>
@@ -126,7 +126,7 @@ const revealDelay = (i: number) => (i > 0 ? `rv-d${Math.min(i, 3)}` : '');
     <section class="everyday" id="everyday">
       <div class="sec-head rv">
         <h2>Cookies, rolls &amp; loaf cake</h2>
-        <span class="util">Small treats, by pre-order</span>
+        <span class="util">Small treats, in pre-order drops</span>
       </div>
 
       <div class="case">

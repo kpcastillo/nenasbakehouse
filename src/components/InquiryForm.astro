@@ -95,13 +95,7 @@ import { categories } from '../data/menu.js';
         </p>
       </div>
 
-      <fieldset class="fieldset">
-        <legend>Pickup or delivery?</legend>
-        <div class="radio-row">
-          <label><input type="radio" name="fulfilment" value="Pickup" checked /> Pickup from the bakehouse</label>
-          <label><input type="radio" name="fulfilment" value="Local delivery" /> Local delivery ({site.serviceArea})</label>
-        </div>
-      </fieldset>
+      <p class="field__hint field__hint--note">Pickup only for now, in {site.pickupArea}. I don't offer delivery yet.</p>
 
       <div class="field">
         <label for="details">Anything else</label>
