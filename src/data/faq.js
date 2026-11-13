@@ -41,7 +41,12 @@ export const faqs = [
   {
     id: 'payment',
     q: 'How do I pay? Is there a deposit?',
-    a: 'I take Apple Pay, Zelle and cash. Custom cakes require a deposit to hold your date; the amount is in your quote.',
+    a: 'I take Apple Pay, Zelle and cash. Custom cakes require a 20% deposit to hold your date, and the deposit goes toward your total.',
+  },
+  {
+    id: 'cancellations',
+    q: 'What if I need to cancel a custom cake?',
+    a: 'If you cancel at least two weeks before your pickup date, your deposit is refunded. Inside two weeks of pickup, the deposit is not refundable.',
   },
   {
     id: 'dietary',
